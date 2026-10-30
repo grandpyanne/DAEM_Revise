@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App icon: an open book with a small aircraft above it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#1F3A5F"
+        android:pathData="M54,0a54,54 0,1 1,0 108a54,54 0,1 1,0 -108z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M26,46 L52,52 L52,80 L26,74 Z" />
+    <path
+        android:fillColor="#DCE6F2"
+        android:pathData="M56,52 L82,46 L82,74 L56,80 Z" />
+    <path
+        android:fillColor="#F2B134"
+        android:pathData="M54,22 L57,32 L70,38 L70,41 L57,38 L56,44 L60,47 L60,49 L54,47.5 L48,49 L48,47 L52,44 L51,38 L38,41 L38,38 L51,32 Z" />
+</vector>

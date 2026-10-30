@@ -1,0 +1,16 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+__pycache__/
+.kotlin/
+
+# Textbook PDFs: copyrighted and too big for GitHub. They stay on this PC only.
+# (The originals are in Documents\DAEM 24.1 / 24.2; see tools/books.py for how they were trimmed.)
+/app/src/main/assets/books/*.pdf

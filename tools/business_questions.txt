@@ -1,0 +1,20 @@
+## 1 | Introduction to Business Planning | Business planning
+Define a business plan and explain its purpose: guiding operations, securing financing, risk mitigation and performance evaluation. ;; Class notes
+Outline the features of a good business plan: clarity, comprehensive content, realistic assumptions, adaptability and visual aids. ;; Class notes
+Explain the guidelines for developing an effective business plan, including SMART objectives. ;; Class notes
+Distinguish between a traditional, a lean and a one-page business plan, and state when each is suitable. ;; Class quiz
+## 2 | Structure of a Business Plan | Business planning
+List and explain the main sections of a business plan: cover sheet, executive summary, nature of the business, organisation, products and services, marketing, operations, and financial plan. ;; Business plan template
+Explain what goes into the 'Nature of the business' section: mission statement, objectives, history, legal structure, ownership and location. ;; Business plan template
+Explain the purpose of the executive summary and why it is written last. ;; Class quiz
+## 3 | Marketing Plan | Marketing
+Define a market and a marketing plan. Explain customer classification by demographics, psychographics, geographics and behaviour. ;; Class notes
+Explain the importance of competitor analysis and its key aspects: product offering, pricing strategies and market positioning. ;; Class notes
+Group task: define a relevant market and analyse market share for a chosen business. ;; Group work
+## 4 | Pricing & Sales Strategy | Marketing
+Explain cost-plus, value-based, competitive, penetration and skimming pricing, and choose a strategy for an engineering product. ;; Group work
+Explain consultative, solution, relationship and upselling/cross-selling tactics, and how engineers support the sales effort. ;; Group work
+Set two SMART sales targets for a product's first year. ;; Group work
+## 5 | Financial Plan | Finance
+Explain what the financial plan contains: start-up costs, sources of funds, projected income statement, cash flow forecast, balance sheet and break-even analysis. ;; Class quiz
+Explain why financial projections usually cover three to five years and why break-even analysis matters to investors. ;; Class quiz

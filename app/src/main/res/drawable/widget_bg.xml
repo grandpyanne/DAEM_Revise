@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Night-sky background for the home-screen widget (same colours as the study score card). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="315"
+        android:startColor="#1B2A55"
+        android:endColor="#2E2A6B" />
+    <corners android:radius="24dp" />
+</shape>

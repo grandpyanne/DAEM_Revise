@@ -1,0 +1,81 @@
+## 1 | Semiconductor Theory | Analog Electronics
+Define 'valence electrons' with respect to semiconductors. State two semiconductor materials. ;; June/July 2024
+A silicon atom is represented as ²⁸₁₄Si. For the atom state the atomic mass number and the number of neutrons, and draw the orbital diagram of the silicon atom. ;; March/April 2025
+Distinguish between conductors, insulators and semiconductors in terms of energy bands and temperature coefficient of resistance. ;; Class notes
+Distinguish between intrinsic and extrinsic semiconductors, and explain how N-type and P-type materials are formed. ;; Class notes
+## 2 | BJT & Amplifiers | Analog Electronics
+With the aid of a construction diagram, describe the operation of an NPN bipolar junction transistor (BJT). ;; June/July 2024
+A common emitter transistor configuration has a voltage drop of 0.5 V across the load resistor, V_CC = 8 V and current amplification factor α = 0.96. Determine the collector-emitter voltage, collector current, current amplification factor β, and base current. ;; June/July 2024
+Describe the operation of a BJT transistor as a switch. ;; June/July 2024
+State the functions of the coupling and bypass capacitors C1, C2 and C3 in a common emitter amplifier circuit. ;; June/July 2024
+An amplifier has an input signal of 1 mA at 10 mV and a corresponding output signal of 10 mA at 1 V. Determine the voltage gain, current gain in decibels, and power gain. ;; June/July 2024
+An amplifier with negative feedback gives an output of 10 V for an input of 0.5 V. When the feedback is removed, it requires 0.25 V input to give the same output. Determine the fraction of the output voltage fed back. ;; June/July 2024
+For a common emitter silicon transistor amplifier (Figure 2): identify the type of circuit bias, state one merit of this type of bias, and determine the voltages at the base, emitter and collector. ;; March/April 2025
+## 3 | Diodes, Rectifiers & Special Devices | Analog Electronics
+For the symbol of an electronic device (Figure 3), identify the labelled parts and state two applications of the device. ;; March/April 2025
+For a half-wave rectifier using a silicon diode (Figure 5), determine the maximum value of secondary r.m.s. voltage, the dc load current, and the peak inverse voltage (PIV) of the diode. ;; March/April 2025
+State two advantages of controlled rectifiers over diode rectifiers. ;; March/April 2025
+Draw the block diagram of a regulated dc power supply and state the function of each block. ;; Class notes
+Describe the construction and operation of a silicon controlled rectifier (SCR). ;; Class notes
+Explain the operation of a photodiode and of a varactor diode, giving one application of each. ;; Class notes
+## 4 | Op-Amps, Oscillators & Wave Shaping | Analog Electronics
+Define each of the following with respect to op-amps: drift, slew rate, common mode rejection ratio. ;; March/April 2025
+For an op-amp astable multivibrator (Figure 4, V_SS = 10 V), determine the upper and lower threshold voltages and the frequency of oscillation, and sketch the output waveforms. ;; March/April 2025
+With the aid of a circuit diagram, describe the operation of a Colpitts oscillator. ;; June/July 2024
+Define a 'clamper' with respect to wave shaping, citing two applications. For a clamper circuit (Figure 3), describe its operation and draw the output waveform. ;; June/July 2024
+A differential amplifier has an output of 1 V with a differential input of 10 mV, and a common mode output of 5 mV with a common mode input of 10 mV. Determine the differential gain, common mode gain, and common mode rejection ratio in dB. ;; June/July 2024
+For an op-amp summer circuit, show that the output voltage is Vo = −Rf(V1/R1 + V2/R2 + V3/R3). ;; June/July 2024
+## 5 | Number Systems & Codes | Digital Electronics
+Convert: (1101011)₂ to octal; (3.CDE)₁₆ to base 4; (384.625)₁₀ to hexadecimal. ;; March/April 2025
+Evaluate in the given bases: (F2CD)₁₆ − (EF6A)₁₆; (1110011)₂ × (10010)₂; (164)₈ + (32)₈; (3241)₅ + (2113)₅. ;; March/April 2025
+Convert the decimal number (73.75)₁₀ to its equivalent binary and octal. ;; June/July 2024
+Convert: (6857.625)₁₀ to octal; (4372.4051)₈ to decimal; (26.85)₁₀ to binary. ;; Oct/Nov 2017
+Convert the decimal number 3789 into 8-4-2-1 BCD, Excess-3, and ASCII (ASCII for 0 is 30H). Convert the binary number 101100 into Gray code. ;; Oct/Nov 2017
+Convert: (1101011)₂ into octal; (723.1275)₁₀ into binary; (BF2.B9)₁₆ into binary. ;; Oct/Nov 2016
+Express the decimal number 8734 in BCD, Excess-3 code and ASCII. ;; Oct/Nov 2016
+Perform the code conversions: Gray code 11100111 into binary; (129)₁₀ to Excess-3; (11001010)₂ into Gray code. ;; KNEC paper
+## 6 | Boolean Algebra & Logic Gates | Digital Electronics
+State De Morgan's theorems for two variables A and B, and prove them using truth tables. ;; March/April 2025
+Complete each Boolean rule: A·1 = ?, A + 1 = ?, A + AB = ?, AB + AB' = ? ;; March/April 2025
+An aircraft engine starts only if fuel level is sufficient (A), all doors are closed (B) and the electrical fault check passes (C). Draw the truth table, write the simplified Boolean expression, and implement the logic circuit. ;; June/July 2024
+For a 2-input CMOS NAND gate (Figure 4), draw the truth table and describe its operation. ;; June/July 2024
+Complete with proof: A + A + A = ?; A + AB = ? Simplify (A + B)(A + C). ;; Oct/Nov 2017
+Define fan-in with respect to logic gates. For a given digital gate circuit, state the gate's family, explain its working and derive its logic function with a truth table. ;; Oct/Nov 2017
+Distinguish between positive and negative logic. Simplify (A + B)(A + C) using Boolean algebra. Convert B(A + C) into canonical form. ;; Oct/Nov 2016
+State five classes of logic family and explain five characteristics of a logic family. ;; KNEC paper
+For a TTL NAND gate with totem pole output (Figure 2), draw the truth table and explain the gate operation. ;; KNEC paper
+## 7 | Combinational Logic Circuits | Digital Electronics
+For a 4-to-1 multiplexer (Figure 1): obtain the truth table, derive a minimal expression for the output using a K-map, and implement it using NAND gates only. ;; March/April 2025
+Define with respect to combinational logic: decoder, encoder, multiplexer, demultiplexer. ;; KNEC paper
+Draw a truth table for a binary-to-Gray code encoder and implement it using Ex-OR gates only. ;; KNEC paper
+## 8 | Flip-Flops, Counters, Registers & Memory | Digital Electronics
+Draw an SR flip-flop circuit using NAND gates, and its truth table. ;; June/July 2024
+With the aid of a logic circuit diagram, describe the operation of a 4-bit Johnson counter using D flip-flops. ;; June/July 2024
+Two 16 MB RAMs are used to implement a 32 MB RAM. Draw the memory configuration and state the address ranges for each RAM. ;; June/July 2024
+A 64K × 8 RAM is made from 16K × 4 RAM chips. Determine the number of chips required, the size of decoder needed to select the chips, and the number of address lines for each chip. Draw the memory implementation. ;; March/April 2025
+Draw the truth tables for R-S and J-K flip-flops. Show how a T flip-flop can be obtained from a JK flip-flop. Describe the operation of a serial-in serial-out (SISO) register. ;; Oct/Nov 2017
+## 9 | ADCs & Displays | Digital Electronics
+Define resolution and accuracy with respect to an analog-to-digital converter (ADC). With a block diagram, describe the operation of a successive approximation ADC. ;; March/April 2025
+With the aid of a labelled diagram, describe the operation of a reflective-type liquid crystal display (LCD). ;; June/July 2024
+## 10 | Control Basics, Block Diagrams & Signal Flow | Control Systems
+Define with respect to control systems: control element; plant. ;; March/April 2025
+Using block diagram reduction techniques, reduce the block diagram (Figure 6) to canonical form and derive the system transfer function. ;; March/April 2025
+Define with respect to signal flow graphs: node; path. With sketches, describe a source node, non-touching loops, and a self-loop. ;; March/April 2025
+State three merits of open-loop control systems. ;; June/July 2024
+For the block diagram (Figure 5), draw the corresponding signal flow graph and determine the transfer function using Mason's gain formula. ;; June/July 2024
+A position control system uses two potentiometers of sensitivity Kp, an amplifier of gain Ka, a DC motor driving the load through a gear train of ratio n, and a tacho-generator minor feedback loop. Draw the block diagram and derive the transfer function. ;; KNEC paper
+## 11 | System Modelling & Compensators | Control Systems
+For an RLC circuit (Figure 6), write the loop equation using KVL, the node equations using KCL, and determine the transfer function. ;; June/July 2024
+Derive the transfer function of a lead-lag compensator network (Figure 7). ;; March/April 2025
+State three effects of compensating networks in control systems. Derive the transfer function of a phase-lead compensation circuit. ;; June/July 2024
+Draw the analog computer symbols for an integrator and a potentiometer (coefficient). Draw the analogue computer diagram for simulating a system described by two simultaneous differential equations. ;; March/April 2025
+## 12 | Stability: Routh, Nyquist, Bode & Nichols | Control Systems
+State the Routh-Hurwitz stability criterion. For G(s)H(s) = K / s(s+1)(s+2), find the poles and characteristic equation, and use the Routh array to find the range of K for stability. State two demerits of the Routh-Hurwitz criterion. ;; March/April 2025
+For the characteristic equation s⁴ + 2s³ + (4+K)s² + 9s + 25 = 0, draw the Routh array and determine the range of K for stability. ;; June/July 2024
+State two merits of Nichols plots. Plot given gain/phase data on a Nichols chart and determine the phase margin, gain margin, resonant frequency, and peak closed-loop gain. ;; March/April 2025
+State the Nyquist stability criterion. Define phase crossover point and frequency, phase margin, gain crossover point and frequency. Sketch the Nyquist plot for G(s) = 6 / (s² + 2s + 2)(s + 2) and find the margins. ;; KNEC paper
+State four advantages of Bode plots. For G(s) = 5 / s(1 + 0.6s)(1 + 0.1s), draw the asymptotic Bode diagram, find the phase and gain margins, and state whether the system is stable. ;; KNEC paper
+Determine the stability of a system with a sixth-order characteristic equation using the Routh array. Determine and plot the poles and zeros of a given F(s) on the s-plane. ;; KNEC paper
+## 13 | Time Response & Test Signals | Control Systems
+Draw the graphs of the unit step and unit ramp test signals. ;; June/July 2024
+A unity feedback system has open-loop transfer function G(s) = K / s(s+1)(s+2). Determine the closed-loop response and the characteristic equation of the closed-loop system. ;; KNEC paper

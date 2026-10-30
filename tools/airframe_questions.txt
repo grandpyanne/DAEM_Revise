@@ -1,0 +1,36 @@
+## 1 | Hydraulic Systems | Hydraulics
+Explain six basic scientific principles of hydraulic systems and how Pascal's law applies to landing gear, brakes and powered flight controls. Highlight three advantages and two disadvantages of mineral-based hydraulic fluids. Outline five factors considered when selecting a hydraulic fluid. ;; Oct/Nov 2024
+With labelled sketches, describe the construction and operation of a hydraulic pressure reducing valve. ;; Oct/Nov 2024
+With a labelled sketch, describe the operation of a gerotor-type hydraulic pump. Highlight twelve safety precautions observed when working on hydraulic systems. ;; June/July 2024
+With labelled sketches, describe the operation of a closed-centre poppet selector valve and a vane-type pump. ;; June/July 2023
+Explain five requirements when installing flexible hydraulic lines. With a schematic diagram, describe the operation of a hydraulic flap overload valve. ;; June/July 2022
+With a labelled sketch, describe the construction and operation of a gear-type pumping system. ;; Oct/Nov 2022
+## 2 | Pneumatic Systems | Pneumatics
+Explain the function and operation of a pressure regulator, oil and water trap, dehydrator, relief valve and air filter in a pneumatic system. Outline six pneumatic duct fitting and handling precautions. ;; Oct/Nov 2024
+Outline five advantages of compressed air over other power systems. ;; June/July 2023
+Highlight five advantages of pneumatic systems. Describe the construction and operation of a closed-centre, high-pressure pneumatic system. ;; June/July 2022
+Discuss typical pneumatic system maintenance practices. With a cross-sectional sketch, explain the operation of a vane-type air pump. ;; Oct/Nov 2022
+## 3 | Landing Gear, Shock Absorbers & Steering | Landing gear
+Identify the labelled parts of a landing gear system. Discuss general maintenance procedures for shock absorbers. ;; Oct/Nov 2024
+With reference to a powered steering system, sketch the mechanical side and explain the operation. ;; Oct/Nov 2024
+With a labelled sketch, explain the construction and operation of an unseparated oleo-pneumatic strut. ;; June/July 2024
+Describe the operation and maintenance procedure of a typical powered steering system. ;; June/July 2024
+Describe the construction and operation of a separated oleo strut. ;; June/July 2023
+With a cross-sectional sketch, explain the operation of a shimmy damper. Show and label the layout of a nose-gear hydro-mechanical steering system. ;; June/July 2022
+Explain the construction and operation of an unseparated oleo-pneumatic strut. Discuss landing gear safety switches. ;; Oct/Nov 2022
+## 4 | Wheels, Tyres, Brakes & Antiskid | Wheels & brakes
+With a labelled sketch, describe the construction of a split wheel. Describe the components and operation of an expander brake. ;; Oct/Nov 2024
+Identify the parts of a three-segmented rotor brake and describe its operation. Explain the guidelines for checking an antiskid system during preflight inspection. ;; June/July 2024
+With a cross-sectional sketch, describe the operation of a boosted brake master cylinder. Highlight the precautions for wheel removal and tyre removal, and the wheel inspection procedure. ;; June/July 2023
+Discuss the construction and operation of a power brake system. Explain tyre markings: size, ply rating, speed rating, green/grey dots and red dot/triangle. Differentiate between galling and spalling, brinelling and water stain, and discolouration and rust on wheel bearings. ;; June/July 2022
+With a block diagram, explain the operation of a mechanical antiskid system. Describe the four regions of a tyre. Explain the three forms of aquaplaning and outline ten remedial actions during landing. ;; Oct/Nov 2022
+## 5 | Air Conditioning, Pressurisation & Oxygen | Environmental
+With a schematic sketch, explain an air conditioning system using a displacement-type blower. ;; Oct/Nov 2024
+Explain the requirements of an air conditioning system. Describe the construction and operation of a combustion heater. Explain a leak test on a gaseous oxygen system and the procedure for charging from an oxygen refill cart. Describe a pressurisation diaphragm-type safety valve. ;; June/July 2023
+Explain six requirements of an air conditioning system and show the construction of a vapour cycle system. Outline the procedure for charging an oxygen system from a refill cart and discuss a demand-flow oxygen system. ;; June/July 2022
+Explain explosive and rapid decompression. Describe a passenger oxygen generator. Explain the basic principles of air conditioning and the bleed-air bootstrap system. ;; Oct/Nov 2022
+## 6 | Aircraft Electrical Systems | Electrical
+Discuss the features and components of aircraft alternating current systems. ;; Oct/Nov 2024
+Discuss fuses and circuit breakers as current limiting devices. ;; June/July 2023
+With a schematic diagram, describe the operation of a battery starting system. ;; June/July 2022
+Describe the difference between series and shunt DC motors. Highlight six inspection checks on an installed generator. ;; Oct/Nov 2022

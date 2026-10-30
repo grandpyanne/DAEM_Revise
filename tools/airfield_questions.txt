@@ -1,0 +1,28 @@
+## 1 | Weight & Balance | Airfield safety
+Highlight six effects of improper aircraft loading. After removing a radio (12.2 lb at +15.8 in), a power supply (9.2 lb at +95 in) and an ELT (3.2 lb at +135 in), and installing a radio (8.4 lb at +14.6 in), an ELT (1.7 lb at +135 in) and a seat (21 lb at +97 in) on an aircraft of empty weight 1876 lb (CG +36.1 in), determine the new CG. Discuss draining fuel and jacking the aircraft during weighing. ;; March/April 2025
+A helicopter consumes fuel and loads ballast to correct a forward and right-heavy condition: construct the loading charts and determine the longitudinal CG and the lateral offset moments for take-off and for the flight back. ;; June/July 2024
+Highlight the procedure for determining the CG for weights at various locations. Using a loading chart (pilot, passengers, baggage, full fuel), determine the CG, comment, and find the change in CG when two passengers swap seats. ;; June/July 2021
+## 2 | Aviation Security | Airfield safety
+Differentiate between sabotage and security, and between airside and landside. Outline six functions of the KCAA in aviation security. Explain ten acts of unlawful interference. ;; March/April 2025
+Differentiate between unknown stores and unpredictability, security survey and security test, COMAIL and COMAT, and authorised person and operator. Describe six functions of the KCAA. Outline six matters the airport security programme's contingency plan must cover. ;; June/July 2022
+Explain 'high risk cargo' and the requirements for classifying it. Explain three purposes of KCAA security regulation. Outline the entities covered by the civil aviation (security) regulations. ;; June/July 2021
+## 3 | Aerodrome Operations, Signals & Markings | Airfield safety
+State the meaning of green flashes, steady red, red flashes and white flashes from the control tower to personnel on the runway. Complete a table on airport lighting. Discuss radio transmission techniques that ensure messages are clearly received. ;; March/April 2025
+Complete a table on airport signs and markings. Describe runway excursion, overshoot, incursion, confusion and undershoot. ;; June/July 2022
+Explain the apron and the general principles for allocating aircraft parking stands. With a diagram, illustrate a typical airport layout. ;; June/July 2021
+## 4 | Maintenance Programmes & Airworthiness | Airfield safety
+With a labelled sketch, describe ETOPS. Discuss airworthiness directives, service bulletins, defects and special events in unscheduled maintenance. ;; March/April 2025
+Outline four categories of mandatory occurrence reporting and explain the key voluntary reporting principles. Highlight scheduled maintenance triggers; show the condition monitoring programme as a flow chart; outline computer-aided maintenance processes; differentiate quality control and quality assurance. ;; June/July 2022
+Explain the aircraft requirements for condition monitoring maintenance and the objectives of an operator's maintenance programme. Outline six computer-aided maintenance processes. Explain the requirements for issue and renewal of a standard certificate of airworthiness for new and used aircraft. ;; June/July 2021
+## 5 | Research: Types, Problem & Process | Research methods
+Differentiate between descriptive and analytical, quantitative and qualitative, and conceptual and empirical research. Explain the research process. ;; March/April 2025
+Highlight six factors to consider when selecting a research subject. ;; June/July 2024
+Highlight five motivations for research, five components of a research problem, factors in selecting a research problem, and 'understanding the nature of the problem' as a technique of defining it. Differentiate quantitative and qualitative, and conceptual and empirical research; outline the steps in developing a research question. ;; June/July 2022
+Highlight four motives for research and describe the major types of research. ;; June/July 2021
+## 6 | Sampling & Data Collection | Research methods
+Discuss deliberate, simple random, systematic and stratified sampling. Outline four advantages and four disadvantages of questionnaires. ;; March/April 2025
+Outline seven merits and seven demerits of personal interviews. Explain warranty cards, store audits and pantry audits as data collection methods. ;; June/July 2024
+Explain the steps in developing a sampling design. ;; June/July 2021
+## 7 | Data Analysis & Research Reports | Research methods
+Explain the principles of tabulation and the importance of coding data. Discuss the sections of a final research report. ;; March/April 2025
+Explain tabulation, its importance and its principles. Highlight the rules for writing a research report and discuss its size and physical format. ;; June/July 2021

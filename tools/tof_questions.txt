@@ -1,0 +1,40 @@
+## 1 | Stability & Control | Stability
+Discuss each of the following factors that affect aircraft static longitudinal stability: position of the centre of gravity; position of the wing's centre of pressure; design of the tailplane; wing downwash. ;; Oct/Nov 2023
+Discuss aircraft static longitudinal stability. With the aid of sketches, explain the Dutch roll mode of aircraft instability. With a labelled sketch, explain why an aircraft is designed with a wing and a tailplane. ;; June/July 2023
+Differentiate between static and dynamic stability. With labelled sketches, differentiate between frise and differential ailerons, and between slot/aileron control and spoiler control, as methods of controlling aileron drag. ;; June/July 2022
+With a labelled sketch, describe the phugoid instability mode. With reference to longitudinal stability, outline the factors that affect the effectiveness of the tailplane, and describe longitudinal dihedral. ;; June/July 2022
+Differentiate between longitudinal and lateral stability and describe the types of static stability. With reference to control surface flutter, explain the causes and describe a method of elimination. ;; Oct/Nov 2021
+Describe spiral instability. Outline the safety precautions observed during control surface rigging. With a labelled sketch, discuss positive dynamic directional stability. Describe the degrees of freedom of an aircraft. ;; Oct/Nov 2021
+Outline five variable factors that increase the static stability of an aircraft. With labelled sketches, describe dihedral and anhedral as features affecting lateral stability. ;; June/July 2019
+With labelled sketches, describe mass balancing and aerodynamic balancing of control surfaces. ;; June/July 2019
+## 2 | Flaps, Stalling & Swept Wings | Lift & Stall
+Explain how trailing edge flaps affect stalling speed. With sketches, explain the construction and function of plain, split, slotted and Fowler flaps. ;; Oct/Nov 2023
+With sketches, explain four methods used to alleviate wing tip stalling on a swept-back wing. With labelled sketches, explain the causes of an incipient spin. ;; Oct/Nov 2023
+Explain the term 'ground effect'. With sketches, explain how ground effect changes aircraft trim and stability, and its influence on trailing edge flaps. ;; June/July 2023
+With labelled sketches, differentiate between the construction and operation of plain and slotted trailing edge flaps. ;; June/July 2019
+With sketches of a swept-back wing at the stall, explain the causes of pitch-up, and the methods of alleviating it: wash out, wing fences, vortex generators and saw-tooth leading edge. ;; June/July 2019
+## 3 | Aircraft Performance | Performance
+With a labelled graph, differentiate between the speeds for maximum angle of climb (Vx) and maximum rate of climb (Vy). A jet aircraft with a wing loading of 2.4 kN/m² and a mass of 4500 kg has a maximum thrust of 30 kN at sea level. If CD = 0.04 at 270 knots, determine the maximum possible rate of climb and the greatest angle of climb. ;; Oct/Nov 2023
+Explain how lift/drag ratio, steady wind and weight affect glide performance. An aircraft glides 1.5 nautical miles for every 1000 ft of height in still air: calculate the gliding angle, and the distance and angle with a 20-knot head wind at 60 knots airspeed. ;; Oct/Nov 2023
+Highlight three methods of reducing the lift-off distance and three of reducing the landing roll. ;; June/July 2023
+An aircraft weighs 5000 lb, wing area 100 ft², CD₀ = 0.015, Oswald efficiency 0.6, aspect ratio 6, V = 500 ft/s, ρ = 0.00237 slug/ft³. Determine the drag coefficient in straight and level flight and in a 30° climb, and comment. ;; June/July 2023
+Determine the thrust required at sea level for a twin-turbofan jet aircraft from given wing, weight and drag data. Explain excess power, absolute ceiling and service ceiling. ;; June/July 2023
+With a labelled sketch, show the forces on an aircraft during a climb. Describe the effects of altitude, mass, flap setting and wind component on climb performance. ;; June/July 2022
+Complete a table on climb performance. Discuss the effects of weight on flight performance. Explain the effects of mass, air density and wind on take-off performance. ;; Oct/Nov 2021
+With a labelled graph, discuss the total drag curve. Describe the classification of aircraft performance with reference to the KCARs. ;; Oct/Nov 2021
+An aircraft of 12 000 kg climbs at 10° at 110 knots with a drag of 36.0 kN: determine the power used against drag, against gravity, and in total. ;; June/July 2019
+In still air an aircraft glides 1.5 nautical miles per 1000 ft of height: determine the gliding angle, and the angle and distance per 1000 ft against a 20-knot head wind at 60 knots airspeed. Discuss aircraft ceiling. Explain the effect of weight on aircraft descent. ;; June/July 2019
+## 4 | Turns, Manoeuvres & the V-n Diagram | Manoeuvres
+Outline four objectives of a manoeuvre envelope (V-n) diagram. With a labelled V-n diagram, discuss aircraft g-limitations. ;; Oct/Nov 2023
+With a turn and slip indicator, explain slipping, skidding and balanced turns. An aircraft of 1000 kg turns steadily at 55 knots with 45° of bank: calculate the acceleration, the force producing it, and the wing loading if the wing area is 14.14 m². ;; Oct/Nov 2023
+With a labelled sketch, derive from first principles the formula for the angular velocity for the best level turn performance. ;; June/July 2023
+Differentiate between sideslip and drift. With sketches, explain the stages of an aerobatic spin. Outline seven inspection checks carried out on a wing after flight manoeuvres. ;; June/July 2022
+With a labelled sketch, describe the forces on an aircraft in a turn. Discuss the fatigue meter with reference to inspection and maintenance. ;; Oct/Nov 2021
+Describe climbing turns and descending turns. ;; June/July 2019
+## 5 | Helicopter Aerodynamics | Helicopters
+With labelled sketches, explain autorotation and the Coriolis effect. ;; Oct/Nov 2023
+Describe the change in single disc attitude through 360° for a maximum pitch change of 4°. Describe Warren truss fuselage construction; show the difference between articulated and flexible (rigid) rotor heads; highlight three advantages of a shrouded tail rotor. ;; June/July 2023
+Sketch a vertical and horizontal hinge; explain dragging; describe three causes of rotor blade dragging. ;; June/July 2023
+With a labelled sketch, describe the forces on a helicopter in forward flight. Explain blade flapping and describe dissymmetry of lift at 100 knots forward speed with a 400-knot tip speed. ;; June/July 2022
+Complete a table on piston-engine helicopter flight controls and discuss autorotation. Discuss articulated, semi-rigid and rigid rotor systems, with an advantage and disadvantage of each. ;; Oct/Nov 2021
+Describe torque and gyroscopic precession with reference to helicopters. ;; June/July 2019

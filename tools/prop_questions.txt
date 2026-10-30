@@ -1,0 +1,30 @@
+## 1 | Propeller Theory & Forces | Theory
+Explain tip speed and propeller efficiency. With labelled sketches, explain the forces that act on a propeller in flight. ;; March/April 2025
+Differentiate between the momentum theory and the vortex theory of propellers. ;; June/July 2024
+With a labelled sketch, explain the forces on a propeller blade element. Explain five factors which increase the ability of a propeller to absorb power, giving one limitation of each. ;; June/July 2023
+With sketches, explain the forces that act on a propeller in flight. ;; June/July 2023
+Explain the effect of tip speed and propeller efficiency. With a labelled sketch, discuss asymmetric propeller loading on a twin-engine aircraft. ;; June/July 2022
+## 2 | Pitch Control, Governors & Feathering | Control
+Describe the operation of an automatic propeller feathering system. ;; June/July 2024
+With labelled sketches, describe the construction and operation of non-counterweight and counterweight constant-speed propellers. ;; June/July 2024
+With sketches, describe the power and condition levers in the cockpit. Explain specific fuel consumption, torque, RPM, turbine inlet temperature, exhaust gas temperature and shaft horsepower as engine power parameters. ;; June/July 2024
+With a labelled sketch, describe the construction and operation of a two-piston controllable-pitch propeller. ;; June/July 2023
+With a circuit diagram, explain a typical built-in auto-feather safety system. Explain a relight in flight when the propeller is feathered. Describe beta control. ;; June/July 2022
+With labelled sketches, describe the construction and principle of operation of a propeller governor. ;; June/July 2022
+## 3 | Synchronising, De-icing & Balancing | Systems
+With a labelled schematic sketch, describe the construction and operation of a propeller electric de-icing system. ;; March/April 2025
+Explain the function of each component of a propeller synchronising system. Describe static and dynamic propeller balancing. ;; March/April 2025
+Highlight the requirements of a propeller de-icing system. With a labelled sketch, describe the operation of a propeller synchroniser. ;; June/July 2024
+With a labelled schematic sketch, describe the operation of an electrothermal propeller de-icing system. ;; June/July 2023
+Sketch the blade interaction for a four-engine aircraft with and without synchrophasing; describe synchrophasing and explain how it is achieved on modern aircraft. ;; June/July 2022
+## 4 | Construction, Installation & Maintenance | Maintenance
+Outline five requirements for a propeller blade to be installed on an aircraft. Highlight six factors that cause propeller fatigue in flight. With a cross-sectional sketch, explain how a propeller is installed on a flanged shaft. ;; March/April 2025
+With reference to propeller maintenance, outline eight major repairs and describe the process of treatment and repair. ;; June/July 2024
+With a labelled sketch, describe the construction of a Hartzell composite blade, and explain composite blade inspection. ;; June/July 2024
+Outline ten major repairs and six alterations on a propeller, and four effects of major repair and alteration. Highlight the procedure for blade tracking. Explain inspections on fixed-pitch and controllable-pitch propellers. ;; June/July 2023
+With labelled sketches, describe the construction of Hartzell, Hamilton Standard and Dowty Rotol composite blades. ;; June/July 2023
+Outline eight fault indications that necessitate propeller removal. Discuss a typical propeller tracking inspection. Explain propeller track and its effect. ;; June/July 2022
+For a turboprop engine, highlight seven pre-starting precautions and the starting procedure. Outline the precautions when starting an engine by hand-cranking the propeller. State six turbine engine monitoring instruments and their functions. ;; June/July 2022
+## 5 | Airworthiness Regulations | Regulations
+With reference to JAR Part 35 airworthiness standards, highlight propeller ratings and operating limitations, and critical parts identified by the safety analysis. Highlight what JAR regards as hazardous propeller effects. ;; June/July 2023
+With reference to the KCARs, outline seven functions of an AMO for class 2 propellers. With reference to FAR, outline four failures causing excessive imbalance and seven elements of an acceptable safety assessment. ;; June/July 2022
