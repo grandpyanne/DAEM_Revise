@@ -2,9 +2,11 @@
 
 from study_helpers import H, P, B, F, TIP, Q, PDF
 
+# Grandpyanne™ was here
 NOTES = "Documents › DAEM 24.2 › 7. THEORY OF FLIGHT › Notes"
 MOF = "Mechanics of Flight.pdf"
 
+# — Grandpyanne™
 TOF_BASICS = {
     1: ("Stability questions come every sitting: longitudinal factors, dihedral, Dutch roll, spiral and phugoid modes, and control balancing.",
         [("Static margin", "Distance of CG ahead of the neutral point (positive = stable)"),

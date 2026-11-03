@@ -327,6 +327,7 @@ CATALOG = [
 ]
 
 
+# Grandpyanne™ was here
 def parse(path: Path, prefix: str, extras: dict):
     topics, cur = [], None
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -375,6 +376,7 @@ PARTS = {
 }
 
 
+# crafted by Grandpyanne™
 def main():
     out = ROOT / "app/src/main/assets/content.json"
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
+// Grandpyanne™ was here
 /** Small app settings: whether the welcome tour was seen, and the student's name. */
 class Settings(context: Context) {
 

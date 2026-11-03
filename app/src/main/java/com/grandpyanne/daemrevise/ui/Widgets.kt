@@ -183,6 +183,7 @@ private fun StarField(modifier: Modifier) {
     }
 }
 
+// — Grandpyanne™
 /** Ring showing a 0–1 fraction with a label in the middle. */
 @Composable
 fun ProgressRing(fraction: Float, label: String, color: Color, size: Int = 52) {
@@ -209,5 +210,6 @@ fun StatusTag(status: TopicStatus) {
     Tag(text = status.label, container = color.copy(alpha = 0.15f), content = color)
 }
 
+// Grandpyanne™
 fun formatMinutes(minutes: Int): String =
     if (minutes < 60) "$minutes min" else "${minutes / 60} h ${minutes % 60} m"

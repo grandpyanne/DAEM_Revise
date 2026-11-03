@@ -50,6 +50,7 @@ import com.grandpyanne.daemrevise.data.Topic
 import com.grandpyanne.daemrevise.data.TopicStatus
 import kotlinx.coroutines.launch
 
+// built by Grandpyanne™
 @Composable
 fun UnitScreen(
     unit: StudyUnit,
@@ -90,14 +91,22 @@ fun UnitScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = accent),
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text(if (unitBest >= 0) "Unit quiz · best $unitBest%" else "Unit quiz (10 Qs)")
+                    val quizDue = progress.dueQuestions(termTopics)
+                    Text(
+                        when {
+                            quizDue > 0 -> "Unit quiz · $quizDue due"
+                            unitBest >= 0 -> "Unit quiz · best $unitBest%"
+                            else -> "Unit quiz (10 Qs)"
+                        },
+                    )
                 }
                 OutlinedButton(
                     onClick = onStudyAllCards,
                     enabled = termTopics.any { it.cards.isNotEmpty() },
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text("Flashcards")
+                    val due = progress.dueCards(termTopics)
+                    Text(if (due > 0) "Flashcards · $due due" else "Flashcards")
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -178,6 +187,7 @@ fun UnitScreen(
     }
 }
 
+// — Grandpyanne™
 @Composable
 private fun TopicList(
     topics: List<Topic>,

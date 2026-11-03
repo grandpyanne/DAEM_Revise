@@ -2,7 +2,7 @@
 
 An offline Android revision app for the DAEM Year 2 KNEC units, built from your own past papers, notes and textbooks.
 
-## What's inside (version 13)
+## What's inside (version 19)
 
 | Unit | Topics | MCQs | Past-paper questions | Flashcards | Textbook links |
 | --- | --- | --- | --- | --- | --- |
@@ -25,9 +25,10 @@ An offline Android revision app for the DAEM Year 2 KNEC units, built from your 
 - **Books tab**: the textbook chapters for the topic. Tap **Read** and the book opens inside the app at the exact page.
 - **Textbooks** (new in v9, built in): 7 books ship inside the app — Bansal, Khurmi, Bird & Ross, H.K. Dass, Kermode, the BA SC17 propeller notes and EASA Module 17. The reader has zoom (− / +) and Go to page. Nothing to download or set up.
 - **Home-screen widget** (new in v6): your 🔥 streak, today's minutes against the 60-minute goal, your study score, and Kapi the capybara — awake once you've studied today, asleep if not. Tap it to open the app. Add it from the "Add Kapi to your home screen" card, or long-press your home screen → Widgets → DAEM Revise.
-- **Quizzes**: MCQs per topic or a 10-question unit quiz. Options are shuffled; every answer shows a full explanation. Best scores are saved.
+- **Quizzes** (spaced repetition new in v19): MCQs per topic or a 10-question unit quiz. Options are shuffled; every answer shows a full explanation. Missed questions come back first next time, and ones you get right return after a growing gap (1 day, 3 days, about a week…). The quiz tiles show how many are due.
 - **Papers tab**: every KNEC question on the topic with its sitting, plus a "Practised" tick.
-- **Formulas** and **Facts** tabs, and **flashcards** where missed cards come back first.
+- **Formulas** and **Facts** tabs.
+- **Flashcards with spaced repetition** (new in v19, like Anki / SM-2): tap Show answer, then rate yourself Again / Hard / Good / Easy. Each button shows when the card comes back (<1m, 1d, 4d…). Due cards come first, then up to 15 new cards a session; gaps grow 1 → 3 → 8 → 20 days → months as you keep remembering. "Practise all cards anyway" reviews without changing the schedule.
 - **Search**: find any question by keyword or year, e.g. `torsion 2024`.
 - Everything is saved on the phone and works with no internet.
 
@@ -38,7 +39,7 @@ Out of 100: up to 50 for time (full at 60 minutes a day), up to 30 for today's q
 ## Sharing the app with friends
 
 1. In Android Studio: **Build › Build App Bundle(s) / APK(s) › Build APK(s)**.
-2. When it finishes, click **locate** in the pop-up. Send `app-debug.apk` on WhatsApp.
+2. When it finishes, click **locate** in the pop-up. Send `DAEM-Revise-v19.apk` on WhatsApp (the file is named after the version automatically).
 3. Your friend taps the file, allows installing from WhatsApp/Files when asked, then taps **Install**.
 
 ## Updating from an older version
@@ -110,3 +111,7 @@ tools/
 - A few typos from the source question bank were corrected (for example "150 kW" in a compound-strut question is "150 kN").
 - Electronics questions marked "KNEC paper" came from a scanned paper whose year was not legible.
 - KNEC papers, lecturer notes and textbooks are for your own study. Ask permission before sharing the app more widely.
+
+---
+
+DAEM Revise was designed and built by Grandpyanne™.

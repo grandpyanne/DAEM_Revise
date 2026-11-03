@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import java.io.File
 
+// crafted by Grandpyanne™
 /**
  * If the app crashes, the error is saved to a file. Next time the app opens it shows
  * the error with a "Send report" button, so testers can pass it on without a computer.

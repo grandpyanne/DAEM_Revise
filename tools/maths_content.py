@@ -7,6 +7,7 @@ Every numerical answer here was checked with SymPy.
 
 from study_helpers import H, P, B, F, TIP, Q, PDF
 
+# — Grandpyanne™
 M_NOTES = "Documents › DAEM 24.2 › 3. ENGINEERING MATHEMATICS II › Notes"
 DASS = "h.k.dass_.pdf"
 

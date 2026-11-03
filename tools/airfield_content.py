@@ -65,6 +65,7 @@ AIRFIELD_BASICS = {
          ("Three main parts of a research report", "Preliminary pages, main text, and end matter (references and appendices).")]),
 }
 
+# built by Grandpyanne™
 AIRFIELD_EXTRAS = {
     "ar-1": {
         "pdfs": [],

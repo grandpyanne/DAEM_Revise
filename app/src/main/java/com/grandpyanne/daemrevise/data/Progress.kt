@@ -10,6 +10,7 @@ import java.util.Locale
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+// built by Grandpyanne™
 /**
  * Everything the app remembers about your studying, saved on the phone
  * (SharedPreferences) so it survives closing the app:
@@ -35,21 +36,82 @@ class Progress private constructor(context: Context) {
         check(version >= 0)
     }
 
-    // ---- flashcards -------------------------------------------------------
+    // ---- flashcards (spaced repetition, like Anki) -------------------------
 
-    fun isCardKnown(topicId: String, index: Int): Boolean {
+    /**
+     * Where a card stands in its review schedule, or null if it has never been studied.
+     * Cards marked "Got it" in the old flashcards (before spaced repetition) start as
+     * learned and due today, so nobody loses progress.
+     */
+    fun cardState(topicId: String, index: Int): CardState? {
         observe()
-        return prefs.getBoolean(cardKey(topicId, index), false)
+        CardState.decode(prefs.getString(srsKey(topicId, index), null))?.let { return it }
+        return if (prefs.getBoolean(cardKey(topicId, index), false)) {
+            CardState(interval = 1, reps = 1, due = Srs.today(), learning = false)
+        } else {
+            null
+        }
     }
 
-    fun setCardKnown(topicId: String, index: Int, known: Boolean) {
-        prefs.edit().putBoolean(cardKey(topicId, index), known).apply()
+    /** Records a rating and returns the card's new state. */
+    fun rateCard(topicId: String, index: Int, rating: Rating): CardState {
+        val today = Srs.today()
+        val next = Srs.next(cardState(topicId, index) ?: CardState(due = today), rating, today)
+        prefs.edit()
+            .putString(srsKey(topicId, index), next.encode())
+            .putBoolean(cardKey(topicId, index), next.graduated)
+            .apply()
         saved()
+        return next
     }
+
+    /** A card counts as known once it has graduated from learning. */
+    fun isCardKnown(topicId: String, index: Int): Boolean = cardState(topicId, index)?.graduated == true
 
     fun knownCards(topic: Topic): Int = topic.cards.indices.count { isCardKnown(topic.id, it) }
 
     fun knownCards(unit: StudyUnit): Int = unit.topics.sumOf { knownCards(it) }
+
+    /** Cards that need reviewing today (studied before and now due). New cards are not counted. */
+    fun dueCards(topics: List<Topic>): Int {
+        val today = Srs.today()
+        return topics.sumOf { t -> t.cards.indices.count { i -> cardState(t.id, i)?.let { it.due <= today } == true } }
+    }
+
+    /** Cards never studied yet. */
+    fun newCards(topics: List<Topic>): Int = topics.sumOf { t -> t.cards.indices.count { cardState(t.id, it) == null } }
+
+    /** The next day something comes due after today, and how many cards, or null if nothing is scheduled. */
+    fun nextReview(topics: List<Topic>): Pair<Long, Int>? {
+        val today = Srs.today()
+        val days = topics.flatMap { t -> t.cards.indices.mapNotNull { cardState(t.id, it)?.due } }.filter { it > today }
+        val first = days.minOrNull() ?: return null
+        return first to days.count { it == first }
+    }
+
+    // ---- quiz questions (spaced repetition) ---------------------------------
+
+    /** Where a quiz question stands in its review schedule, or null if never answered. */
+    fun questionState(topicId: String, index: Int): CardState? {
+        observe()
+        return CardState.decode(prefs.getString(quizSrsKey(topicId, index), null))
+    }
+
+    /** Right answer counts as Good, wrong as Again (it comes back first next time). */
+    fun rateQuestion(topicId: String, index: Int, right: Boolean): CardState {
+        val today = Srs.today()
+        val rating = if (right) Rating.GOOD else Rating.AGAIN
+        val next = Srs.next(questionState(topicId, index) ?: CardState(due = today), rating, today)
+        prefs.edit().putString(quizSrsKey(topicId, index), next.encode()).apply()
+        saved()
+        return next
+    }
+
+    /** Quiz questions answered before and due again today (missed ones included). */
+    fun dueQuestions(topics: List<Topic>): Int {
+        val today = Srs.today()
+        return topics.sumOf { t -> t.mcqs.indices.count { i -> questionState(t.id, i)?.let { it.due <= today } == true } }
+    }
 
     // ---- past-paper questions --------------------------------------------
 
@@ -198,7 +260,11 @@ class Progress private constructor(context: Context) {
     fun resetUnit(unit: StudyUnit) {
         val editor = prefs.edit()
         unit.topics.forEach { topic ->
-            topic.cards.indices.forEach { editor.remove(cardKey(topic.id, it)) }
+            topic.cards.indices.forEach {
+                editor.remove(cardKey(topic.id, it))
+                editor.remove(srsKey(topic.id, it))
+            }
+            topic.mcqs.indices.forEach { editor.remove(quizSrsKey(topic.id, it)) }
             topic.questions.indices.forEach { editor.remove(questionKey(topic.id, it)) }
             editor.remove("quizBest:${topic.id}")
         }
@@ -208,6 +274,8 @@ class Progress private constructor(context: Context) {
     }
 
     private fun cardKey(topicId: String, index: Int) = "card:$topicId:$index"
+    private fun srsKey(topicId: String, index: Int) = "srs:$topicId:$index"
+    private fun quizSrsKey(topicId: String, index: Int) = "qsrs:$topicId:$index"
     private fun questionKey(topicId: String, index: Int) = "q:$topicId:$index"
 
     /** "2026-10-28" style key for a day, counted back from today. */

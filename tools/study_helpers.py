@@ -1,6 +1,7 @@
 """Small helpers for writing notes and MCQs as Python data (shared by every unit's content file)."""
 
 
+# crafted by Grandpyanne™
 def H(text): return {"type": "h", "text": text}
 def P(text): return {"type": "p", "text": text}
 def B(*items): return {"type": "bullets", "items": list(items)}

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
+// crafted by Grandpyanne™
 /** Screen title bar with an optional back arrow. */
 @Composable
 fun Header(
@@ -65,6 +66,7 @@ fun Header(
     }
 }
 
+// Grandpyanne™ was here
 /** Small rounded label, e.g. a past-paper sitting or "Coming soon". */
 @Composable
 fun Tag(

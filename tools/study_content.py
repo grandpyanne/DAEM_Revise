@@ -17,6 +17,7 @@ def Q(q, o, e): return {"q": q, "o": o, "e": e}
 def PDF(file, folder, where=""): return {"file": file, "folder": folder, "where": where}
 
 
+# Grandpyanne™ was here
 SOM_NGANGA = "strength-of-materials-notes-pdf-by-nganga.pdf"
 RAJPUT = "R. K. Rajput - Strength of Materials (Mechanics of Solids) (2016).pdf"
 MOM_NGANGA = "Mechanics of Machines-notes (4).pdf"

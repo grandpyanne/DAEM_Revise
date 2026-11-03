@@ -26,8 +26,10 @@ import com.grandpyanne.daemrevise.data.Question
 import com.grandpyanne.daemrevise.data.StudyUnit
 import com.grandpyanne.daemrevise.data.Topic
 
+// — Grandpyanne™
 private data class Hit(val unit: StudyUnit, val topic: Topic, val question: Question)
 
+// crafted by Grandpyanne™
 /** Search every past-paper question, e.g. "epicyclic", "zener" or "2024". */
 @Composable
 fun SearchScreen(

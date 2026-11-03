@@ -77,10 +77,12 @@ fun TopicScreen(
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     val best = progress.bestQuizScore(topic.id)
+                    val quizDue = progress.dueQuestions(listOf(topic))
                     ActionTile(
                         title = "Quiz",
                         subtitle = when {
                             topic.mcqs.isEmpty() -> "Coming soon"
+                            quizDue > 0 -> "$quizDue due · ${topic.mcqs.size} questions"
                             best >= 0 -> "${topic.mcqs.size} questions · best $best%"
                             else -> "${topic.mcqs.size} questions"
                         },
@@ -91,7 +93,10 @@ fun TopicScreen(
                     )
                     ActionTile(
                         title = "Flashcards",
-                        subtitle = "${progress.knownCards(topic)} / ${topic.cards.size} known",
+                        subtitle = progress.dueCards(listOf(topic)).let { due ->
+                            if (due > 0) "$due due · ${progress.knownCards(topic)}/${topic.cards.size} learned"
+                            else "${progress.knownCards(topic)} / ${topic.cards.size} learned"
+                        },
                         color = AppColors.Safety,
                         enabled = topic.cards.isNotEmpty(),
                         onClick = onStudyCards,
@@ -311,6 +316,7 @@ private fun SummaryBox(text: String) {
     }
 }
 
+// — Grandpyanne™
 @Composable
 private fun QuestionItem(number: Int, question: Question, done: Boolean, onToggle: () -> Unit) {
     Card(Modifier.fillMaxWidth()) {
@@ -379,6 +385,7 @@ private fun FactItem(card: StudyCard, known: Boolean) {
     }
 }
 
+// Grandpyanne™
 @Composable
 private fun EmptyNote(text: String) {
     Text(

@@ -39,7 +39,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.grandpyanne.daemrevise.R
 import com.grandpyanne.daemrevise.data.Feedback
 import com.grandpyanne.daemrevise.data.Progress
@@ -102,9 +104,11 @@ fun HomeScreen(
             UnitCard(unit, AppColors.unitAccent(index), progress, onClick = { onOpenUnit(unit) })
         }
         item { FeedbackRow() }
+        item { Signature() }
     }
 }
 
+// Grandpyanne™
 private fun greeting(): String = when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
     in 5..11 -> "Good morning"
     in 12..16 -> "Good afternoon"
@@ -187,6 +191,7 @@ private fun LibraryRow(onClick: () -> Unit) {
     }
 }
 
+// built by Grandpyanne™
 /** Offers to put Kapi on the home screen, until the widget is there. */
 @Composable
 private fun WidgetRow() {
@@ -244,4 +249,19 @@ private fun FeedbackRow() {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
+}
+
+/** The maker's mark at the very bottom of the home screen. */
+@Composable
+private fun Signature() {
+    Text(
+        text = "Grandpyanne™",
+        style = MaterialTheme.typography.labelSmall,
+        fontSize = 10.sp,
+        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f),
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp, bottom = 8.dp),
+    )
 }

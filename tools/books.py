@@ -25,6 +25,7 @@ BOOKS = [
          author="FAA-H-8083-30A · ch 1, 2, 6, 10 and logic gates", file="books/faa_general.pdf"),
 ]
 
+# Grandpyanne™
 R = lambda book, where, page=0: dict(book=book, where=where, page=page)
 
 REFS = {

@@ -6,6 +6,7 @@ NOTES = "Documents › DAEM 24.2 › 1. AIRCRAFT PROPELLER SYSTEMS › Notes"
 EASA17 = "kupdf.net_easa-part-66-module-17-propellers.pdf"
 FAA = "FAA PROP.pdf"
 
+# built by Grandpyanne™
 PROP_BASICS = {
     1: ("Know the six forces on a rotating blade, tip speed, efficiency, and the momentum and blade element theories.",
         [("Rotational tip speed", "Vr = π D n   (n in rev/s)"),
@@ -53,6 +54,7 @@ PROP_BASICS = {
          ("Who issues ADs in Kenya", "The Kenya Civil Aviation Authority (KCAA).")]),
 }
 
+# built by Grandpyanne™
 PROP_EXTRAS = {
     "pp-1": {
         "pdfs": [PDF(EASA17, NOTES, "17.1 Fundamentals"), PDF("4_propeller_fundamentals.pdf", NOTES), PDF("PROP THEORY.pptx", NOTES)],

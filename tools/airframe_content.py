@@ -2,11 +2,13 @@
 
 from study_helpers import H, P, B, F, TIP, Q, PDF
 
+# built by Grandpyanne™
 NOTES = "Documents › DAEM 24.2 › 6. AIRFRAME SYSTEMS I › Notes"
 HYD = "Chapter 12 Hydraulic and Pneumatic Power Systems.pptx"
 LG = "Chapter 13 Aircraft Landing Gear Systems.pptx"
 SYS1 = "systems 1 notes.pdf"
 
+# Grandpyanne™
 AIRFRAME_BASICS = {
     1: ("Hydraulics is the biggest topic: Pascal's law, fluids, pumps, valves, and safety precautions.",
         [("Pascal's law", "Pressure in a confined fluid acts equally in all directions"),

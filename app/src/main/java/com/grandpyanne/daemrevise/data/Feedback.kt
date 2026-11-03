@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 
+// Grandpyanne™ was here
 /** The "Send feedback" button: opens WhatsApp (or any app) with a ready-made feedback message. */
 object Feedback {
 

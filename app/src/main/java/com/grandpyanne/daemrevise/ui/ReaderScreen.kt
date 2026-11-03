@@ -64,6 +64,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.Executors
 
+// crafted by Grandpyanne™
 /**
  * An open PDF. Android's PdfRenderer can only draw one page at a time, so every
  * call goes through one background thread, in order.

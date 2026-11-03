@@ -46,6 +46,7 @@ BUSINESS_BASICS = {
          ("Fixed vs variable costs", "Fixed costs stay the same whatever the output (rent); variable costs change with output (materials).")]),
 }
 
+# Grandpyanne™
 BUSINESS_EXTRAS = {
     "bp-1": {
         "pdfs": [PDF("Introduction_to_Business_Planning.pdf", NOTES)],

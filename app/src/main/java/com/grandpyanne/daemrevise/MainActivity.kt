@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// — Grandpyanne™
 /** Every screen the app can show. The newest entry in the back stack is on screen. */
 sealed interface Screen {
     data object Home : Screen
@@ -109,6 +110,7 @@ sealed interface Screen {
     data class Quiz(val unitId: String, val topicId: String?) : Screen
 }
 
+// built by Grandpyanne™
 @Composable
 private fun App(progress: Progress, settings: Settings) {
     val context = LocalContext.current

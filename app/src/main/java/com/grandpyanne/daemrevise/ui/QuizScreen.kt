@@ -39,34 +39,56 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.grandpyanne.daemrevise.data.Mcq
 import com.grandpyanne.daemrevise.data.Progress
+import com.grandpyanne.daemrevise.data.Srs
 import com.grandpyanne.daemrevise.data.Topic
 import kotlin.math.roundToInt
 
-/** One question as shown: its topic, and the options in shuffled order. */
+/** One question as shown: its topic, its position in that topic, and the options in shuffled order. */
 private data class QuizItem(
+    val topicId: String,
     val topicTitle: String,
+    val index: Int,
     val mcq: Mcq,
     val options: List<String>,
     val correctIndex: Int,
 )
 
-private fun buildQuiz(topics: List<Topic>, limit: Int): List<QuizItem> =
-    topics.flatMap { t -> t.mcqs.map { t.title to it } }
+// crafted by Grandpyanne™
+/**
+ * Picks the questions with spaced repetition: first the ones due today (missed ones before
+ * reviews), then ones never answered, then the rest, soonest-due first. Shown in a mixed order.
+ */
+private fun buildQuiz(topics: List<Topic>, limit: Int, progress: Progress): List<QuizItem> {
+    val today = Srs.today()
+    val all = topics.flatMap { t -> t.mcqs.indices.map { i -> Triple(t, i, progress.questionState(t.id, i)) } }
+    val due = all.filter { it.third?.let { s -> s.due <= today } == true }
         .shuffled()
+        .sortedWith(compareBy({ !it.third!!.learning }, { it.third!!.due }))
+    val new = all.filter { it.third == null }.shuffled()
+    val later = all.filter { it.third?.let { s -> s.due > today } == true }
+        .shuffled()
+        .sortedBy { it.third!!.due }
+    return (due + new + later)
         .take(limit)
-        .map { (title, mcq) ->
+        .shuffled()
+        .map { (topic, i, _) ->
+            val mcq = topic.mcqs[i]
             val order = mcq.options.indices.shuffled()
             QuizItem(
-                topicTitle = title,
+                topicId = topic.id,
+                topicTitle = topic.title,
+                index = i,
                 mcq = mcq,
                 options = order.map { mcq.options[it] },
                 correctIndex = order.indexOf(mcq.answer),
             )
         }
+}
 
 /**
- * Multiple-choice quiz. Pick an answer to see at once whether it was right,
- * followed by a full explanation. The score is shown at the end.
+ * Multiple-choice quiz with spaced repetition. Pick an answer to see at once whether it
+ * was right, followed by a full explanation. Missed questions come back first next time;
+ * ones you get right come back after a growing gap (1 day, 3 days, about a week…).
  *
  * @param scoreKey where the best score is saved (a topic id, or "unit:<id>").
  */
@@ -80,10 +102,11 @@ fun QuizScreen(
     onBack: () -> Unit,
 ) {
     var round by remember { mutableIntStateOf(0) }
-    val items = remember(topics, round) { buildQuiz(topics, limit) }
+    val items = remember(topics, round) { buildQuiz(topics, limit, progress) }
     var index by remember(items) { mutableIntStateOf(0) }
     var chosen by remember(items, index) { mutableStateOf<Int?>(null) }
     var correct by remember(items) { mutableIntStateOf(0) }
+    var missed by remember(items) { mutableIntStateOf(0) }
 
     Column(Modifier.fillMaxSize()) {
         Header(
@@ -106,6 +129,7 @@ fun QuizScreen(
                 total = items.size,
                 percent = percent,
                 best = progress.bestQuizScore(scoreKey),
+                missed = missed,
                 onRetry = { round++ },
                 onDone = onBack,
             )
@@ -126,8 +150,9 @@ fun QuizScreen(
                     if (chosen == null) {
                         chosen = option
                         val right = option == items[index].correctIndex
-                        if (right) correct++
+                        if (right) correct++ else missed++
                         progress.recordAnswer(right)
+                        progress.rateQuestion(items[index].topicId, items[index].index, right)
                     }
                 },
                 onNext = { index++ },
@@ -251,8 +276,9 @@ private fun ExplanationBox(right: Boolean, answer: String, explanation: String) 
     }
 }
 
+// — Grandpyanne™
 @Composable
-private fun QuizResult(correct: Int, total: Int, percent: Int, best: Int, onRetry: () -> Unit, onDone: () -> Unit) {
+private fun QuizResult(correct: Int, total: Int, percent: Int, best: Int, missed: Int, onRetry: () -> Unit, onDone: () -> Unit) {
     val color = when {
         percent >= 80 -> AppColors.Correct
         percent >= 50 -> AppColors.Safety
@@ -271,10 +297,17 @@ private fun QuizResult(correct: Int, total: Int, percent: Int, best: Int, onRetr
             text = when {
                 percent >= 80 -> "Excellent work. You know this topic well."
                 percent >= 50 -> "Good effort. Reread the notes for the ones you missed, then try again."
-                else -> "Keep going. Read the notes first, then retry; the questions come in a new order."
+                else -> "Keep going. Read the notes first, then retry."
             },
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
+        )
+        Text(
+            text = if (missed > 0) "The $missed you missed will come first next time, until they stick."
+            else "Questions you got right come back in a few days, to check they stuck.",
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         if (best >= 0) {
             Text("Best score: $best%", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

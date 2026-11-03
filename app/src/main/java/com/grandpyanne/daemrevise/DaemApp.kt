@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.work.Configuration
 import com.grandpyanne.daemrevise.data.CrashLog
 
+// crafted by Grandpyanne™
 /**
  * Runs before any screen.
  *  - Switches on the crash recorder as early as possible.

@@ -84,8 +84,8 @@ private val PAGES = listOf(
         title = "Test yourself",
         intro = "Knowing it beats reading it.",
         points = listOf(
-            "✅" to "Quizzes explain why every answer is right or wrong",
-            "🃏" to "Flashcards bring back the ones you missed first",
+            "✅" to "Quizzes explain every answer, and bring back the ones you missed",
+            "🃏" to "Flashcards use spaced repetition, like Anki: rate each card and it comes back just before you'd forget it",
             "🎯" to "Use \"This term\" in a unit to see only what you've covered",
             "🔎" to "Search any question by word or year, e.g. torsion 2024",
         ),
@@ -102,6 +102,7 @@ private val PAGES = listOf(
     ),
 )
 
+// crafted by Grandpyanne™
 /** First-run tour. [onDone] gets the name the student typed ("" if none). */
 @Composable
 fun WelcomeScreen(initialName: String, onDone: (String) -> Unit) {

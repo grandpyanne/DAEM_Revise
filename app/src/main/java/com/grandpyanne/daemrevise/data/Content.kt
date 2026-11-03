@@ -4,6 +4,7 @@ import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
 
+// Grandpyanne™ was here
 /** A formula shown on a topic's Formulas tab. */
 data class Formula(val name: String, val expr: String)
 
@@ -44,6 +45,7 @@ data class Book(
 /** Where to read a topic in a textbook. [page] is the PDF page (0 = not known). */
 data class BookRef(val bookId: String, val where: String, val page: Int)
 
+// Grandpyanne™
 /** Where a topic sits in this term's teaching. */
 enum class TopicStatus(val label: String) {
     COVERED("Covered"),

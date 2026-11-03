@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+// — Grandpyanne™
 /** Shown after a crash: the error, and buttons to send it or carry on. */
 @Composable
 fun CrashScreen(report: String, onSend: () -> Unit, onContinue: () -> Unit) {

@@ -43,6 +43,7 @@ import com.grandpyanne.daemrevise.MainActivity
 import com.grandpyanne.daemrevise.R
 import com.grandpyanne.daemrevise.data.Progress
 
+// crafted by Grandpyanne™
 /**
  * Home-screen widget: study streak with a fire, today's minutes against the daily goal,
  * the study score, and Kapi the capybara, who is awake once you have studied today.
@@ -88,6 +89,7 @@ class StudyWidget : GlanceAppWidget() {
     }
 }
 
+// crafted by Grandpyanne™
 /** Android talks to this; it hands the work to [StudyWidget]. */
 class StudyWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = StudyWidget()
