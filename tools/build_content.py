@@ -8,7 +8,7 @@ import re
 import sys
 from pathlib import Path
 
-from study_content import EXTRAS, LATER
+from study_content import EXTRAS
 from books import BOOKS, REFS
 from maths_content import MATHS_BASICS
 from prop_content import PROP_BASICS
@@ -19,6 +19,7 @@ from business_content import BUSINESS_BASICS
 
 HERE = Path(__file__).parent        # tools/
 ROOT = HERE.parent                   # project root
+FIGURES = ROOT / "app/src/main/assets/figures"   # diagrams cropped from the KNEC papers
 
 # ---------------------------------------------------------------- extras
 # topic number -> (summary, [(formula name, formula)], [(card front, card back)])
@@ -349,7 +350,6 @@ def parse(path: Path, prefix: str, extras: dict):
             }
             tid = cur["id"]
             extra = EXTRAS.get(tid, {})
-            cur["status"] = extra.get("status", "later" if tid in LATER else "covered")
             cur["notes"] = extra.get("notes", [])
             cur["pdfs"] = extra.get("pdfs", [])
             cur["refs"] = REFS.get(tid, [])
@@ -359,8 +359,17 @@ def parse(path: Path, prefix: str, extras: dict):
             ]
             topics.append(cur)
             continue
-        q, _, src = line.partition(";;")
-        cur["questions"].append({"q": q.strip(), "src": src.strip()})
+        # "question ;; sitting ;; fig: a.png, b.png" (the figure part is optional)
+        parts = [p.strip() for p in line.split(";;")]
+        q, src = parts[0], (parts[1] if len(parts) > 1 and not parts[1].startswith("fig:") else "")
+        entry = {"q": q, "src": src}
+        figs = [f.strip() for p in parts[1:] if p.startswith("fig:") for f in p[4:].split(",") if f.strip()]
+        for f in figs:
+            if not (FIGURES / f).exists():
+                sys.exit(f"missing figure {f} for: {q[:60]}")
+        if figs:
+            entry["figs"] = figs
+        cur["questions"].append(entry)
     missing = [n for n in extras if f"{prefix}-{n}" not in {t["id"] for t in topics}]
     if missing:
         sys.exit(f"extras with no topic in {path.name}: {missing}")
@@ -377,6 +386,21 @@ PARTS = {
 
 
 # crafted by Grandpyanne™
+# Course order for each unit's topics (ids stay the same, so saved progress is kept).
+TOPIC_ORDER = {
+    # Mech Tech syllabus (19.2 Strength of Materials, then 20.2 Mechanics of Machines):
+    # stress & strain → SF/BM, bending, deflection → thin cylinders → torsion → springs;
+    # kinematics & momentum → mass MI → area MI → belts & clutches → gears → dynamics (balancing).
+    "mechtech": ["mt-1", "mt-2", "mt-3", "mt-7", "mt-4", "mt-5", "mt-6",
+                 "mt-13", "mt-14", "mt-8", "mt-12", "mt-11", "mt-10", "mt-9"],
+    # Lecturer's notes order: diodes before transistors; time response before stability.
+    "electronics": ["ec-1", "ec-3", "ec-2", "ec-4", "ec-5", "ec-6", "ec-7", "ec-8", "ec-9",
+                    "ec-10", "ec-11", "ec-13", "ec-12"],
+    # Lecturer's folders: 1 Matrices, 2 Vectors, 3 Partial differentiation, 4 Power series, then the rest.
+    "maths2": ["mm-1", "mm-7", "mm-3", "mm-2", "mm-4", "mm-5", "mm-6", "mm-8"],
+}
+
+
 def main():
     out = ROOT / "app/src/main/assets/content.json"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -408,6 +432,14 @@ def main():
     ]
     for uid, name, note in OTHER_UNITS:
         units.append({"id": uid, "name": name, "short": name, "note": note, "ready": False, "topics": []})
+    # Topics appear in the app in course order (syllabus / lecturer's order), not by id.
+    for u in units:
+        order = TOPIC_ORDER.get(u["id"])
+        if order:
+            ids = [t["id"] for t in u["topics"]]
+            if sorted(order) != sorted(ids):
+                sys.exit(f"TOPIC_ORDER for {u['id']} must list exactly {ids}")
+            u["topics"].sort(key=lambda t: order.index(t["id"]))
     for u in units:
         mapping = PARTS.get(u["id"], {})
         for t in u["topics"]:
@@ -447,6 +479,14 @@ def main():
     missing = listed - {u["id"] for u in units}
     if missing:
         sys.exit(f"CATALOG lists units that do not exist: {missing}")
+    # Every FIG(...) in the notes must name a drawing in ui/TopicSketches.kt (made by sketches.py).
+    sk = (Path(__file__).parent / ".." / "app/src/main/java/com/grandpyanne/daemrevise/ui/TopicSketches.kt").read_text(encoding="utf-8")
+    known_figs = set(re.findall(r'^    "([^"]+)" to Triple\(', sk, re.M))
+    for u in units:
+        for t in u["topics"]:
+            for n in t["notes"]:
+                if n["type"] == "fig" and n["id"] not in known_figs:
+                    sys.exit(f"{t['id']}: unknown figure {n['id']} (run tools/sketches.py?)")
     out.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
     for u in units:
         nq = sum(len(t["questions"]) for t in u["topics"])

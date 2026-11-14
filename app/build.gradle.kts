@@ -12,8 +12,8 @@ android {
         applicationId = "com.grandpyanne.daemrevise"
         minSdk = 24
         targetSdk = 35
-        versionCode = 19
-        versionName = "19.0"
+        versionCode = 20
+        versionName = "20.0"
     }
 
     buildTypes {
@@ -36,11 +36,10 @@ android {
         noCompress += "pdf"
     }
 
-    // Name the built app after the version, e.g. DAEM-Revise-v19.apk, ready to send to friends.
+    // Name the built app DAEM_Revision.apk, ready to send to friends.
     applicationVariants.all {
-        val version = versionCode
         outputs.all {
-            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = "DAEM-Revise-v$version.apk"
+            (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName = "DAEM_Revision.apk"
         }
     }
 

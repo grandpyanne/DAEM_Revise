@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.grandpyanne.daemrevise.R
 import com.grandpyanne.daemrevise.data.Progress
-import com.grandpyanne.daemrevise.data.TopicStatus
 import kotlin.random.Random
 
 /**
@@ -197,17 +196,6 @@ fun ProgressRing(fraction: Float, label: String, color: Color, size: Int = 52) {
         )
         Text(label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
     }
-}
-
-/** Coloured label for Covered / Safety / Later. */
-@Composable
-fun StatusTag(status: TopicStatus) {
-    val color = when (status) {
-        TopicStatus.COVERED -> AppColors.Correct
-        TopicStatus.SAFETY -> AppColors.Safety
-        TopicStatus.LATER -> AppColors.Later
-    }
-    Tag(text = status.label, container = color.copy(alpha = 0.15f), content = color)
 }
 
 // Grandpyanne™

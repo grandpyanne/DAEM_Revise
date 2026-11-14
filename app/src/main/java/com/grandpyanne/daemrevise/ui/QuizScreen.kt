@@ -100,6 +100,8 @@ fun QuizScreen(
     limit: Int,
     progress: Progress,
     onBack: () -> Unit,
+    quick: Boolean = false,
+    onGames: (() -> Unit)? = null,
 ) {
     var round by remember { mutableIntStateOf(0) }
     val items = remember(topics, round) { buildQuiz(topics, limit, progress) }
@@ -108,7 +110,7 @@ fun QuizScreen(
     var correct by remember(items) { mutableIntStateOf(0) }
     var missed by remember(items) { mutableIntStateOf(0) }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().topicArt(topics.singleOrNull()?.id)) {
         Header(
             title = title,
             subtitle = if (index < items.size) "Question ${index + 1} of ${items.size}" else "Quiz complete",
@@ -123,13 +125,26 @@ fun QuizScreen(
             )
         } else if (index >= items.size) {
             val percent = (100.0 * correct / items.size).roundToInt()
-            LaunchedEffect(items) { progress.recordQuizScore(scoreKey, percent) }
+            var earnedGame by remember(items) { mutableStateOf(false) }
+            LaunchedEffect(items) {
+                progress.recordQuizScore(scoreKey, percent)
+                if (quick) {
+                    // Only say "earned" if it really added a game (the daily cap may already be reached).
+                    val before = progress.gamesEarnedToday()
+                    progress.recordQuickFive(correct)
+                    earnedGame = progress.gamesEarnedToday() > before
+                }
+            }
             QuizResult(
                 correct = correct,
                 total = items.size,
                 percent = percent,
                 best = progress.bestQuizScore(scoreKey),
                 missed = missed,
+                quick = quick,
+                earnedGame = earnedGame,
+                gamesReady = if (quick) progress.gamesAvailable() else 0,
+                onGames = onGames,
                 onRetry = { round++ },
                 onDone = onBack,
             )
@@ -278,7 +293,19 @@ private fun ExplanationBox(right: Boolean, answer: String, explanation: String) 
 
 // — Grandpyanne™
 @Composable
-private fun QuizResult(correct: Int, total: Int, percent: Int, best: Int, missed: Int, onRetry: () -> Unit, onDone: () -> Unit) {
+private fun QuizResult(
+    correct: Int,
+    total: Int,
+    percent: Int,
+    best: Int,
+    missed: Int,
+    onRetry: () -> Unit,
+    onDone: () -> Unit,
+    quick: Boolean = false,
+    earnedGame: Boolean = false,
+    gamesReady: Int = 0,
+    onGames: (() -> Unit)? = null,
+) {
     val color = when {
         percent >= 80 -> AppColors.Correct
         percent >= 50 -> AppColors.Safety
@@ -309,11 +336,23 @@ private fun QuizResult(correct: Int, total: Int, percent: Int, best: Int, missed
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        if (best >= 0) {
+        if (best >= 0 && !quick) {
             Text("Best score: $best%", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
+        if (earnedGame) {
+            Text(
+                "🎲 Kapi's games woke up! You earned a game.",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = AppColors.Safety,
+                textAlign = TextAlign.Center,
+            )
+        }
         Spacer(Modifier.height(8.dp))
-        Button(onClick = onRetry, modifier = Modifier.fillMaxWidth()) { Text("Try again") }
+        if (gamesReady > 0 && onGames != null) {
+            Button(onClick = onGames, modifier = Modifier.fillMaxWidth()) { Text("Play a game 🎲") }
+        }
+        Button(onClick = onRetry, modifier = Modifier.fillMaxWidth()) { Text(if (quick) "Another 5 ⚡" else "Try again") }
         OutlinedButton(onClick = onDone, modifier = Modifier.fillMaxWidth()) { Text("Done") }
     }
 }

@@ -84,6 +84,7 @@ fun SearchScreen(
                             fontWeight = FontWeight.SemiBold,
                         )
                         Text(hit.question.text, style = MaterialTheme.typography.bodyMedium)
+                        if (hit.question.figures.isNotEmpty()) Tag("📐 Has a diagram")
                         if (hit.question.source.isNotBlank()) Tag(hit.question.source)
                     }
                 }

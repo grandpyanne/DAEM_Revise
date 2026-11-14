@@ -14,3 +14,9 @@ __pycache__/
 # Textbook PDFs: copyrighted and too big for GitHub. They stay on this PC only.
 # (The originals are in Documents\DAEM 24.1 / 24.2; see tools/books.py for how they were trimmed.)
 /app/src/main/assets/books/*.pdf
+
+# Signing keys and built release APKs: never upload these.
+*.jks
+*.keystore
+/app/release/
+*.apk

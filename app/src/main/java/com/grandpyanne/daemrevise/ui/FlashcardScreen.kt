@@ -73,7 +73,7 @@ fun FlashcardScreen(
     var done by remember(sessionKey, cram) { mutableIntStateOf(0) }
     val today = Srs.today()
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().topicArt(topics.singleOrNull()?.id)) {
         Header(
             title = title,
             subtitle = if (cram) "Practice mode · your schedule is not changed" else "Spaced repetition",

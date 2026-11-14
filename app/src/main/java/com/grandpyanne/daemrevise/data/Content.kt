@@ -11,8 +11,11 @@ data class Formula(val name: String, val expr: String)
 /** A flashcard: question on the front, answer on the back. */
 data class Card(val front: String, val back: String)
 
-/** One past-paper question and the sitting(s) it came from. */
-data class Question(val text: String, val source: String)
+/**
+ * One past-paper question and the sitting(s) it came from.
+ * [figures] are diagrams cropped from the paper, stored in assets/figures.
+ */
+data class Question(val text: String, val source: String, val figures: List<String> = emptyList())
 
 /** One piece of a topic's revision notes. */
 sealed interface NoteBlock {
@@ -21,6 +24,8 @@ sealed interface NoteBlock {
     data class Bullets(val items: List<String>) : NoteBlock
     data class FormulaLine(val text: String) : NoteBlock
     data class Tip(val text: String) : NoteBlock
+    /** A labelled diagram from ui/TopicSketches.kt FIGURES, by id. */
+    data class Figure(val id: String) : NoteBlock
 }
 
 /** A multiple-choice question. [answer] is the index of the correct option. */
@@ -46,21 +51,6 @@ data class Book(
 data class BookRef(val bookId: String, val where: String, val page: Int)
 
 // Grandpyanne™
-/** Where a topic sits in this term's teaching. */
-enum class TopicStatus(val label: String) {
-    COVERED("Covered"),
-    SAFETY("Safety"),
-    LATER("Later");
-
-    companion object {
-        fun from(text: String): TopicStatus = when (text) {
-            "safety" -> SAFETY
-            "later" -> LATER
-            else -> COVERED
-        }
-    }
-}
-
 data class Topic(
     val id: String,
     val title: String,
@@ -68,7 +58,6 @@ data class Topic(
     /** Which half of a combined unit this topic belongs to ("" if the unit is not split). */
     val part: String,
     val summary: String,
-    val status: TopicStatus,
     val notes: List<NoteBlock>,
     val mcqs: List<Mcq>,
     val pdfs: List<PdfRef>,
@@ -82,9 +71,6 @@ data class Topic(
         .flatMap { SITTING.findAll(it.source).map { m -> m.value }.toList() }
         .toSet()
         .size
-
-    /** Topics taught this term, plus the "just in case" ones. */
-    val inTermScope: Boolean get() = status != TopicStatus.LATER
 
     private companion object {
         val SITTING = Regex("(June/July|Oct/Nov|March/April) \\d{4}")
@@ -207,7 +193,6 @@ object ContentRepository {
         section = t.optString("section"),
         part = t.optString("part"),
         summary = t.optString("summary"),
-        status = TopicStatus.from(t.optString("status")),
         notes = t.optArray("notes").objects().map(::parseNote),
         mcqs = t.optArray("mcqs").objects().map { m ->
             Mcq(
@@ -226,7 +211,7 @@ object ContentRepository {
         cards = t.optArray("cards").objects()
             .map { Card(it.getString("front"), it.getString("back")) },
         questions = t.optArray("questions").objects()
-            .map { Question(it.getString("q"), it.optString("src")) },
+            .map { Question(it.getString("q"), it.optString("src"), it.optArray("figs").strings()) },
     )
 
     private fun parseNote(n: JSONObject): NoteBlock = when (n.getString("type")) {
@@ -234,6 +219,7 @@ object ContentRepository {
         "bullets" -> NoteBlock.Bullets(n.getJSONArray("items").strings())
         "formula" -> NoteBlock.FormulaLine(n.getString("text"))
         "tip" -> NoteBlock.Tip(n.getString("text"))
+        "fig" -> NoteBlock.Figure(n.getString("id"))
         else -> NoteBlock.Paragraph(n.getString("text"))
     }
 

@@ -1,6 +1,6 @@
 """Aircraft Propeller Systems: summaries, formulas, flashcards, notes and MCQs."""
 
-from study_helpers import H, P, B, F, TIP, Q, PDF
+from study_helpers import H, P, B, F, TIP, FIG, Q, PDF
 
 NOTES = "Documents › DAEM 24.2 › 1. AIRCRAFT PROPELLER SYSTEMS › Notes"
 EASA17 = "kupdf.net_easa-part-66-module-17-propellers.pdf"
@@ -72,6 +72,7 @@ PROP_EXTRAS = {
               "Centrifugal twisting moment: tries to turn the blade to fine pitch.",
               "Aerodynamic twisting moment: tries to turn the blade to coarse pitch, because the centre of pressure is ahead of the pitch axis.",
               "Vibration: a source of fatigue."),
+            FIG("blade-element"),
             H("Tip speed and efficiency"),
             F("Vtip = √((π D n)² + V²)    η = TV / P    J = V / (nD)"),
             P("Example: a 2 m propeller at 2400 rpm (40 rev/s) has a rotational tip speed of 251 m/s; at 60 m/s forward speed the helical tip speed is 258 m/s. If it produces 3000 N of thrust at 60 m/s from 225 kW of shaft power, η = 180 kW/225 kW = 0.80. Efficiency falls sharply as tip speed approaches Mach 1."),

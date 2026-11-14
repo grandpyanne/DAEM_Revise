@@ -28,8 +28,10 @@ import com.grandpyanne.daemrevise.ui.AppColors
 import com.grandpyanne.daemrevise.ui.CrashScreen
 import com.grandpyanne.daemrevise.ui.DaemReviseTheme
 import com.grandpyanne.daemrevise.ui.FlashcardScreen
+import com.grandpyanne.daemrevise.ui.GamesScreen
 import com.grandpyanne.daemrevise.ui.HomeScreen
 import com.grandpyanne.daemrevise.ui.LibraryScreen
+import com.grandpyanne.daemrevise.ui.ParkScreen
 import com.grandpyanne.daemrevise.ui.QuizScreen
 import com.grandpyanne.daemrevise.ui.ReaderScreen
 import com.grandpyanne.daemrevise.ui.SearchScreen
@@ -108,6 +110,15 @@ sealed interface Screen {
 
     /** topicId = null means a 10-question quiz across this term's topics. */
     data class Quiz(val unitId: String, val topicId: String?) : Screen
+
+    /** 5 quick MCQs from every unit (due ones first). */
+    data object QuickFive : Screen
+
+    /** Kapi's games, unlocked by studying. */
+    data object Games : Screen
+
+    /** Kapi's Park: the map of every topic, with stars and blooming areas. */
+    data object Park : Screen
 }
 
 // built by Grandpyanne™
@@ -144,6 +155,39 @@ private fun App(progress: Progress, settings: Settings) {
             onLibrary = { open(Screen.Library) },
             name = settings.name,
             onShowTour = { open(Screen.Welcome) },
+            onQuickFive = { open(Screen.QuickFive) },
+            onGames = { open(Screen.Games) },
+            onPark = { open(Screen.Park) },
+        )
+
+        Screen.Park -> ParkScreen(
+            allUnits = units,
+            progress = progress,
+            onBack = ::back,
+            onOpenTopic = { unit, topic -> open(Screen.Topic(unit.id, topic.id)) },
+        )
+
+        Screen.QuickFive -> {
+            val topics = remember(units) { units.flatMap { u -> u.topics.filter { it.mcqs.isNotEmpty() } } }
+            QuizScreen(
+                title = "Quick 5 ⚡",
+                topics = topics,
+                scoreKey = "quick5",
+                limit = 5,
+                progress = progress,
+                onBack = ::back,
+                quick = true,
+                onGames = {
+                    back()
+                    if (backStack.last() != Screen.Games) open(Screen.Games)
+                },
+            )
+        }
+
+        Screen.Games -> GamesScreen(
+            progress = progress,
+            onBack = ::back,
+            onQuickFive = { open(Screen.QuickFive) },
         )
 
         Screen.Welcome -> WelcomeScreen(
@@ -203,7 +247,7 @@ private fun App(progress: Progress, settings: Settings) {
         is Screen.Flashcards -> {
             val unit = units.first { it.id == screen.unitId }
             val topics = if (screen.topicId == null) {
-                unit.topics.filter { it.inTermScope }
+                unit.topics
             } else {
                 unit.topics.filter { it.id == screen.topicId }
             }
@@ -221,7 +265,7 @@ private fun App(progress: Progress, settings: Settings) {
             if (screen.topicId == null) {
                 QuizScreen(
                     title = "${unit.shortName} quiz",
-                    topics = unit.topics.filter { it.inTermScope },
+                    topics = unit.topics,
                     scoreKey = "unit:${unit.id}",
                     limit = 10,
                     progress = progress,

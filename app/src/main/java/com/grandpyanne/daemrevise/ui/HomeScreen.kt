@@ -60,6 +60,9 @@ fun HomeScreen(
     onLibrary: () -> Unit,
     name: String,
     onShowTour: () -> Unit,
+    onQuickFive: () -> Unit,
+    onGames: () -> Unit,
+    onPark: () -> Unit,
 ) {
     // Save study time every 30 s while the home screen is showing, so the card stays current.
     LaunchedEffect(Unit) {
@@ -89,7 +92,10 @@ fun HomeScreen(
                 }
             }
         }
+        item { ExamCard(units, onOpenUnit) }
         item { StudyScoreCard(progress) }
+        item { ParkRow(units, progress, onPark) }
+        item { PlayRow(progress, onQuickFive, onGames) }
         item { LibraryRow(onClick = onLibrary) }
         item { WidgetRow() }
         item {
@@ -162,6 +168,92 @@ private fun UnitCard(unit: StudyUnit, accent: Color, progress: Progress, onClick
                 Tag("Soon")
             }
         }
+    }
+}
+
+/** Kapi's Park: total stars, and the next stop the park suggests. */
+@Composable
+private fun ParkRow(allUnits: List<StudyUnit>, progress: Progress, onClick: () -> Unit) {
+    val units = parkUnits(allUnits)
+    val total = units.sumOf { progress.unitStars(it) }
+    val max = units.sumOf { it.topics.size * 3 }
+    val next = nextStop(units, progress)
+    val seen = progress.parkSeenStars()
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(androidx.compose.ui.graphics.Brush.horizontalGradient(listOf(Color(0xFF5BBF6A), Color(0xFF8FD3FF))))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+    ) {
+        Text("🏞", style = MaterialTheme.typography.headlineMedium)
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text("Kapi's Park", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black, color = Color.White)
+            Text(
+                if (next != null) "Next stop: ${next.title}" else "Every stop this term is complete 👑",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.White,
+                maxLines = 1,
+            )
+        }
+        Column(horizontalAlignment = Alignment.End) {
+            Text("⭐ $total", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black, color = Color.White)
+            Text(
+                if (seen in 0 until total) "+${total - seen} new!" else "of $max",
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold,
+                color = if (seen in 0 until total) Color(0xFFFFF176) else Color.White.copy(alpha = 0.85f),
+            )
+        }
+    }
+}
+
+// built by Grandpyanne™
+/** Quick 5 (a few MCQs in spare moments) and Kapi's games (earned by studying). */
+@Composable
+private fun PlayRow(progress: Progress, onQuickFive: () -> Unit, onGames: () -> Unit) {
+    val ready = progress.gamesAvailable()
+    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        PlayTile(
+            emoji = "⚡",
+            title = "Quick 5",
+            subtitle = "5 questions from all units",
+            background = MaterialTheme.colorScheme.primaryContainer,
+            onClick = onQuickFive,
+            modifier = Modifier.weight(1f),
+        )
+        PlayTile(
+            emoji = if (ready > 0) "🎲" else "💤",
+            title = "Kapi's games",
+            subtitle = when {
+                ready > 0 -> if (ready == 1) "1 game ready!" else "$ready games ready!"
+                listOf("blocks", "crush", "mahjong").any { progress.freeTryLeft(it) } -> "🎁 Free tries today!"
+                progress.gamesDoneForToday() -> "Back tomorrow ♨️"
+                else -> "Napping… study to wake"
+            },
+            background = MaterialTheme.colorScheme.secondaryContainer,
+            onClick = onGames,
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun PlayTile(emoji: String, title: String, subtitle: String, background: Color, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(2.dp),
+        modifier = modifier
+            .clip(RoundedCornerShape(18.dp))
+            .background(background)
+            .clickable(onClick = onClick)
+            .padding(14.dp),
+    ) {
+        Text(emoji, style = MaterialTheme.typography.titleLarge)
+        Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+        Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

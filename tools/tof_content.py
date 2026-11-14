@@ -1,6 +1,6 @@
 """Theory of Flight: summaries, formulas, flashcards, notes and MCQs."""
 
-from study_helpers import H, P, B, F, TIP, Q, PDF
+from study_helpers import H, P, B, F, TIP, FIG, Q, PDF
 
 # Grandpyanne™ was here
 NOTES = "Documents › DAEM 24.2 › 7. THEORY OF FLIGHT › Notes"
@@ -102,6 +102,7 @@ TOF_EXTRAS = {
               "Aerodynamic balance (horn balance, inset hinge, balance tabs) reduces the pilot's stick forces.",
               "Flutter: a rapid oscillation from coupling of aerodynamic forces with structural flexibility and inertia. Prevented by mass balancing, stiffness and correct control cable tension."),
             TIP("For 'factors affecting longitudinal stability', write one paragraph each on CG, centre of pressure, tailplane and downwash, with a sketch."),
+            FIG("axes"),
         ],
         "mcqs": [
             Q("Moving the centre of gravity forward makes an aircraft:", ["More stable in pitch, with heavier elevator forces", "Less stable in pitch", "Unstable in roll", "Stall at a lower speed"],
@@ -164,6 +165,7 @@ TOF_EXTRAS = {
     "tf-3": {
         "pdfs": [PDF(MOF, NOTES, "Aircraft performance"), PDF("DRAG EXPERIMENT.docx", NOTES, "Lab report")],
         "notes": [
+            FIG("four-forces"),
             H("Climb"),
             F("sin γ = (T − D) / W    RoC = V sin γ = (T − D)V / W"),
             B("Vx (best angle) is at maximum excess thrust; used to clear obstacles.",

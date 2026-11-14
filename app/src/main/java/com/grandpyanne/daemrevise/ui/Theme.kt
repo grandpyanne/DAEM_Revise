@@ -61,7 +61,6 @@ object AppColors {
     val Correct = Color(0xFF2E7D32)
     val Wrong = Color(0xFFC62828)
     val Safety = Color(0xFFB7791F)
-    val Later = Color(0xFF7A808A)
 
     /** Deep night-sky colours for the study score card. */
     val NightTop = Color(0xFF1B2A55)

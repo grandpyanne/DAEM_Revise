@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,6 +32,10 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,14 +43,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.grandpyanne.daemrevise.data.Progress
 import com.grandpyanne.daemrevise.data.StudyUnit
 import com.grandpyanne.daemrevise.data.Topic
-import com.grandpyanne.daemrevise.data.TopicStatus
 import kotlinx.coroutines.launch
 
 // built by Grandpyanne™
@@ -61,25 +62,18 @@ fun UnitScreen(
     onUnitQuiz: () -> Unit,
     onStudyAllCards: () -> Unit,
 ) {
-    var termOnly by rememberSaveable { mutableStateOf(true) }
     var confirmReset by rememberSaveable { mutableStateOf(false) }
 
-    // This term's topics first (covered, then safety), each group sorted by how often KNEC asks it.
+    // Every topic, in course (syllabus) order, as set in tools/build_content.py.
     fun topicsFor(part: String?): List<Topic> = unit.topics
         .filter { part == null || it.part == part }
-        .filter { !termOnly || it.inTermScope }
-        .sortedWith(
-            compareBy<Topic> { it.status.ordinal }
-                .thenByDescending { it.sittings }
-                .thenByDescending { it.questions.size },
-        )
-    val termTopics = unit.topics.filter { it.inTermScope }
+    val termTopics = unit.topics
     val unitBest = progress.bestQuizScore("unit:${unit.id}")
 
     Column(Modifier.fillMaxSize()) {
         Header(title = unit.shortName, subtitle = unit.note, onBack = onBack)
 
-        // Quiz, flashcards and the term filter apply to the whole unit, so they stay above the tabs.
+        // Quiz and flashcards apply to the whole unit, so they stay above the tabs.
         Column(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -109,15 +103,13 @@ fun UnitScreen(
                     Text(if (due > 0) "Flashcards · $due due" else "Flashcards")
                 }
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterPill("This term", selected = termOnly, accent = accent) { termOnly = true }
-                FilterPill("All topics", selected = !termOnly, accent = accent) { termOnly = false }
-            }
         }
 
         if (unit.parts.size > 1) {
             // Combined unit: one tab per part; tap a tab or swipe left/right to switch.
-            val pager = rememberPagerState(pageCount = { unit.parts.size })
+            // Reopen on the part you were last in (e.g. Digital), not always the first.
+            val pager = rememberPagerState(initialPage = (lastPart[unit.id] ?: 0).coerceIn(0, unit.parts.size - 1)) { unit.parts.size }
+            LaunchedEffect(pager) { snapshotFlow { pager.currentPage }.collect { lastPart[unit.id] = it } }
             val scope = rememberCoroutineScope()
             TabRow(
                 selectedTabIndex = pager.currentPage,
@@ -155,6 +147,7 @@ fun UnitScreen(
                     progress = progress,
                     onOpenTopic = onOpenTopic,
                     onReset = { confirmReset = true },
+                    listState = listStateFor("${unit.id}:$page"),
                 )
             }
         } else {
@@ -165,6 +158,7 @@ fun UnitScreen(
                 onOpenTopic = onOpenTopic,
                 onReset = { confirmReset = true },
                 modifier = Modifier.weight(1f),
+                listState = listStateFor(unit.id),
             )
         }
     }
@@ -187,6 +181,12 @@ fun UnitScreen(
     }
 }
 
+// Where you were in each unit, kept while the app is open, so Back from a topic returns
+// to the same part (tab) and the same scroll position.
+private val lastPart = mutableMapOf<String, Int>()
+private val listStates = mutableMapOf<String, LazyListState>()
+private fun listStateFor(key: String): LazyListState = listStates.getOrPut(key) { LazyListState() }
+
 // — Grandpyanne™
 @Composable
 private fun TopicList(
@@ -196,21 +196,14 @@ private fun TopicList(
     onOpenTopic: (Topic) -> Unit,
     onReset: () -> Unit,
     modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState(),
 ) {
     LazyColumn(
+        state = listState,
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 24.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier.fillMaxSize(),
     ) {
-        if (topics.isEmpty()) {
-            item {
-                Text(
-                    "No topics here for this term yet. Tap \"All topics\" to see everything.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
         items(topics, key = { it.id }) { topic ->
             TopicRow(topic, accent, progress, onClick = { onOpenTopic(topic) })
         }
@@ -220,20 +213,6 @@ private fun TopicList(
             }
         }
     }
-}
-
-@Composable
-private fun FilterPill(label: String, selected: Boolean, accent: Color, onClick: () -> Unit) {
-    Text(
-        text = label,
-        style = MaterialTheme.typography.labelLarge,
-        color = if (selected) Color.White else MaterialTheme.colorScheme.onSurfaceVariant,
-        modifier = Modifier
-            .clip(RoundedCornerShape(50))
-            .background(if (selected) accent else MaterialTheme.colorScheme.surfaceVariant)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-    )
 }
 
 @Composable
@@ -256,7 +235,7 @@ private fun TopicRow(topic: Topic, accent: Color, progress: Progress, onClick: (
                 Modifier
                     .width(5.dp)
                     .fillMaxHeight()
-                    .background(if (topic.status == TopicStatus.LATER) AppColors.Later.copy(alpha = 0.4f) else accent),
+                    .background(accent),
             )
             Row(
                 modifier = Modifier
@@ -270,10 +249,6 @@ private fun TopicRow(topic: Topic, accent: Color, progress: Progress, onClick: (
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold,
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        StatusTag(topic.status)
-                        if (topic.sittings > 0) Tag("${topic.sittings} sittings")
-                    }
                     Text(
                         text = buildList {
                             if (topic.notes.isNotEmpty()) add("Notes")

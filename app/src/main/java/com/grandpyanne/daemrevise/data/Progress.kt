@@ -180,7 +180,23 @@ class Progress private constructor(context: Context) {
 
     /** Called when the app comes to the front. */
     fun startSession() {
+        if (studyPaused) return
         sessionStart = SystemClock.elapsedRealtime()
+    }
+
+    /** True while a game is open: game time is play, not study, so it is not counted. */
+    private var studyPaused = false
+
+    /** Stops the study clock (opening a game). */
+    fun pauseStudy() {
+        endSession()
+        studyPaused = true
+    }
+
+    /** Starts the study clock again (leaving a game). */
+    fun resumeStudy() {
+        studyPaused = false
+        startSession()
     }
 
     /** Called when the app goes to the background. */
@@ -255,6 +271,136 @@ class Progress private constructor(context: Context) {
         return (timePart + accuracyPart + streakPart).roundToInt()
     }
 
+    // ---- games (Kapi Blocks, Kapi Jewels, Kapi Mahjong) ---------------------------------------
+    // Plays are earned by studying: every GAME_MINUTES minutes of study, or a Quick 5 with
+    // 4 or more right (up to MAX_QUICK_GAMES of those). At most MAX_GAMES_PER_DAY a day, shared between the games.
+
+    /** Records a finished Quick 5. Returns true if it earned a game. */
+    fun recordQuickFive(correct: Int): Boolean {
+        if (correct < QUICK_ACE) return false
+        val key = "aces:${dayKey(0)}"
+        prefs.edit().putInt(key, prefs.getInt(key, 0) + 1).apply()
+        saved()
+        return true
+    }
+
+    /** Games earned today (study time + aced Quick 5s), capped. */
+    fun gamesEarnedToday(): Int {
+        observe()
+        val fromTime = minutesOn(0) / GAME_MINUTES
+        val fromAces = min(MAX_QUICK_GAMES, prefs.getInt("aces:${dayKey(0)}", 0))
+        return min(MAX_GAMES_PER_DAY, fromTime + fromAces)
+    }
+
+    fun gamesUsedToday(): Int {
+        observe()
+        return prefs.getInt("games:${dayKey(0)}", 0)
+    }
+
+    /** Games ready to play right now. */
+    fun gamesAvailable(): Int =
+        if (DEV_UNLOCK_GAMES) MAX_GAMES_PER_DAY else (gamesEarnedToday() - gamesUsedToday()).coerceAtLeast(0)
+
+    /** True once today's games are all earned and played. */
+    fun gamesDoneForToday(): Boolean = gamesUsedToday() >= MAX_GAMES_PER_DAY
+
+    /** How far the study clock is toward the next game, 0..1 (no numbers shown: Kapi keeps it a secret). */
+    fun progressToNextGame(): Float = (minutesOn(0) % GAME_MINUTES) / GAME_MINUTES.toFloat()
+
+    /** Each game gets one free try a day, before any study, so you know what's waiting. */
+    fun freeTryLeft(game: String): Boolean {
+        observe()
+        return !prefs.getBoolean("freeTry:$game:${dayKey(0)}", false)
+    }
+
+    fun useFreeTry(game: String): Boolean {
+        if (!freeTryLeft(game)) return false
+        prefs.edit().putBoolean("freeTry:$game:${dayKey(0)}", true).apply()
+        saved()
+        return true
+    }
+
+    /** Uses up one game. Returns false if none was available. */
+    fun useGame(): Boolean {
+        if (DEV_UNLOCK_GAMES) return true
+        if (gamesAvailable() <= 0) return false
+        val key = "games:${dayKey(0)}"
+        prefs.edit().putInt(key, prefs.getInt(key, 0) + 1).apply()
+        saved()
+        return true
+    }
+
+    /** The level a game is on (Crush and Mahjong), starting at 1. */
+    fun gameLevel(game: String): Int {
+        observe()
+        return prefs.getInt("gameLevel:$game", 1)
+    }
+
+    fun setGameLevel(game: String, level: Int) {
+        prefs.edit().putInt("gameLevel:$game", level.coerceAtLeast(1)).apply()
+        saved()
+    }
+
+    /** True once the how-to card for [key] has been dismissed. */
+    fun tipSeen(key: String): Boolean = prefs.getBoolean("tip:$key", false)
+
+    fun markTipSeen(key: String) {
+        prefs.edit().putBoolean("tip:$key", true).apply()
+    }
+
+    fun bestGameScore(game: String): Int {
+        observe()
+        return prefs.getInt("gameBest:$game", 0)
+    }
+
+    /** Saves the score; returns true if it is a new best. */
+    fun recordGameScore(game: String, score: Int): Boolean {
+        if (score <= bestGameScore(game)) return false
+        prefs.edit().putInt("gameBest:$game", score).apply()
+        saved()
+        return true
+    }
+
+    // ---- Kapi's Park ----------------------------------------------------------
+    // Each topic is a stop in the park with up to 3 stars, all from things you already do:
+    // read the notes, score 70%+ on its quiz, learn half its flashcards.
+
+    fun notesRead(topicId: String): Boolean {
+        observe()
+        return prefs.getBoolean("notesRead:$topicId", false)
+    }
+
+    fun setNotesRead(topicId: String, read: Boolean) {
+        prefs.edit().putBoolean("notesRead:$topicId", read).apply()
+        saved()
+    }
+
+    /** The three stars for a topic: notes read, quiz 70%+, half the flashcards learned. */
+    fun topicStarList(t: Topic): List<Boolean> {
+        val practised = doneQuestions(t) > 0
+        val quiz = if (t.mcqs.isEmpty()) practised else bestQuizScore(t.id) >= PARK_QUIZ_PASS
+        val cards = if (t.cards.isEmpty()) practised else knownCards(t) * 2 >= t.cards.size
+        return listOf(notesRead(t.id), quiz, cards)
+    }
+
+    fun topicStars(t: Topic): Int = topicStarList(t).count { it }
+
+    fun unitStars(u: StudyUnit): Int = u.topics.sumOf { topicStars(it) }
+
+    /** Stars counted at the last park visit (-1 before the first visit). */
+    fun parkSeenStars(): Int = prefs.getInt("park:seenStars", -1)
+
+    fun setParkSeenStars(n: Int) {
+        prefs.edit().putInt("park:seenStars", n).apply()
+    }
+
+    /** True once the keepsake for a finished area has been revealed. */
+    fun keepsakeShown(unitId: String): Boolean = prefs.getBoolean("park:keepsake:$unitId", false)
+
+    fun markKeepsakeShown(unitId: String) {
+        prefs.edit().putBoolean("park:keepsake:$unitId", true).apply()
+    }
+
     // ---- reset ------------------------------------------------------------
 
     fun resetUnit(unit: StudyUnit) {
@@ -267,6 +413,7 @@ class Progress private constructor(context: Context) {
             topic.mcqs.indices.forEach { editor.remove(quizSrsKey(topic.id, it)) }
             topic.questions.indices.forEach { editor.remove(questionKey(topic.id, it)) }
             editor.remove("quizBest:${topic.id}")
+            editor.remove("notesRead:${topic.id}")
         }
         editor.remove("quizBest:unit:${unit.id}")
         editor.apply()
@@ -302,6 +449,28 @@ class Progress private constructor(context: Context) {
 
         const val DAILY_GOAL_MINUTES = 60
         const val STREAK_MINUTES = 5
+
+        /**
+         * DEVELOPER SWITCH: true = all games unlocked, nothing used up (for building and testing).
+         * Set back to false before sending the app to anyone.
+         */
+        const val DEV_UNLOCK_GAMES = true
+
+        /**
+         * DEVELOPER SWITCH: true = faint blueprint drawings behind topic screens (notes, flashcards,
+         * quiz) for topics that have one. Still being tried out; keep false for the Play Store build.
+         */
+        const val DEV_TOPIC_ART = true
+
+        /** Kapi's lucky number 🤫 */
+        const val GAME_MINUTES = 27
+        const val MAX_GAMES_PER_DAY = 5
+        /** At most this many of a day's games can come from Quick 5s; the rest need study time. */
+        const val MAX_QUICK_GAMES = 2
+        const val QUICK_ACE = 4
+
+        /** Quiz score that earns a topic's quiz star in Kapi's Park. */
+        const val PARK_QUIZ_PASS = 70
 
         fun scoreLabel(score: Int): String = when {
             score >= 85 -> "Excellent"

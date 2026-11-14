@@ -13,6 +13,7 @@ def P(text): return {"type": "p", "text": text}
 def B(*items): return {"type": "bullets", "items": list(items)}
 def F(text): return {"type": "formula", "text": text}
 def TIP(text): return {"type": "tip", "text": text}
+def FIG(fig_id): return {"type": "fig", "id": fig_id}  # a labelled diagram from sketches.py FIG
 def Q(q, o, e): return {"q": q, "o": o, "e": e}
 def PDF(file, folder, where=""): return {"file": file, "folder": folder, "where": where}
 
@@ -25,9 +26,10 @@ MOM_NGANGA = "Mechanics of Machines-notes (4).pdf"
 EXTRAS = {
     # ===================================================== MECH TECH
     "mt-1": {
-        "status": "covered",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Chapter 1"), PDF(RAJPUT, MT_NOTES, "Chapter 1: Simple Stresses and Strains")],
         "notes": [
+            H("In plain words"),
+            P("Stress is how hard a material is being pulled or pushed (force per unit area); strain is how much it stretches or squashes as a fraction of its length. Up to a limit the two are proportional, and the ratio is the material's stiffness, Young's modulus E. Every structural part of an aircraft is sized so its stress stays safely inside that range."),
             H("Stress and strain"),
             P("When a load acts on a body, the body resists it internally. The internal resisting force per unit area is stress. The deformation per unit length is strain."),
             F("σ = P / A    ε = δL / L"),
@@ -48,6 +50,7 @@ EXTRAS = {
               "Yield point: strain increases with little or no increase in stress.",
               "Ultimate tensile strength: maximum load ÷ original area.",
               "Breaking point: the specimen fractures (after necking)."),
+            FIG("stress-strain"),
             H("Factor of safety and strain energy"),
             F("Factor of safety = ultimate stress ÷ working stress"),
             P("Strain energy is the work stored in a strained body. For a bar under axial load U = ½PδL, which gives U = (σ²/2E) × volume. Resilience is strain energy per unit volume; proof resilience is the maximum stored up to the elastic limit."),
@@ -71,9 +74,10 @@ EXTRAS = {
         ],
     },
     "mt-2": {
-        "status": "covered",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Chapter 1, Revision Exercise 1"), PDF(RAJPUT, MT_NOTES, "Chapter 1")],
         "notes": [
+            H("In plain words"),
+            P('This topic uses the stress-strain basics to answer practical questions: how much does a bar stretch under load, what happens to a bar that tapers or has steps, and what stress appears when a bar is heated but not allowed to expand. The tool is always the same: δ = PL/AE, applied piece by piece.'),
             H("Method for any bar problem"),
             B("Find the area carrying the load (circle: πd²/4; hollow circle: π(D² − d²)/4).",
               "Stress σ = P/A, in N/mm² if P is in N and A in mm².",
@@ -107,9 +111,10 @@ EXTRAS = {
         ],
     },
     "mt-3": {
-        "status": "safety",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Section 1.9: compound sections"), PDF(RAJPUT, MT_NOTES, "Chapter 1")],
         "notes": [
+            H("In plain words"),
+            P('A compound bar is two or more materials joined so they carry a load together, such as a steel rod inside a brass tube. Because they are fixed together, they must stretch by the same amount, and their loads must add up to the total. Those two facts are all you need to share the load between them.'),
             H("What a compound bar is"),
             P("Two or more materials joined so they deform together, such as a steel rod inside a bronze tube. Both carry part of the load."),
             H("The two conditions"),
@@ -130,9 +135,10 @@ EXTRAS = {
         ],
     },
     "mt-5": {
-        "status": "covered",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Torsion chapter"), PDF(RAJPUT, MT_NOTES, "Chapter 13: Torsion")],
         "notes": [
+            H("In plain words"),
+            P('Torsion is twisting. A shaft carrying power from an engine to a propeller or rotor is twisted by the torque, which sets up shear stress in the material and makes one end turn slightly relative to the other. The torsion equation links the torque, the shear stress and the angle of twist, so we can size a shaft that is both strong enough and stiff enough.'),
             H("The torsion equation"),
             F("T / J = τ / R = Gθ / L"),
             B("T = torque (N·m); J = polar second moment of area (m⁴).",
@@ -178,9 +184,10 @@ EXTRAS = {
         ],
     },
     "mt-6": {
-        "status": "covered",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Springs chapter"), PDF(RAJPUT, MT_NOTES, "Chapter 14: Springs")],
         "notes": [
+            H("In plain words"),
+            P('A spring stores energy by deflecting under load and gives it back when the load is removed. Close-coiled helical springs mainly twist their wire (torsion); leaf springs bend (like beams). Aircraft use springs in landing gear, controls, valves and instruments.'),
             H("Types of springs"),
             B("Helical springs: wire wound on a cylinder. Close-coiled (small helix angle, mainly torsion) or open-coiled (larger helix angle, torsion and bending).",
               "Spiral springs: wound flat, like a clock spring.",
@@ -219,9 +226,10 @@ EXTRAS = {
         ],
     },
     "mt-7": {
-        "status": "covered",
         "pdfs": [PDF(SOM_NGANGA, MT_NOTES, "Shearing forces and bending moments"), PDF(RAJPUT, MT_NOTES, "Chapter 4: Bending Moments and Shearing Forces; Chapter 5: Bending Stresses")],
         "notes": [
+            H("In plain words"),
+            P('A beam is a long member carrying loads across its length, such as a wing spar or a floor beam. The loads try to shear it and bend it. Shear force and bending moment diagrams show how big those effects are at every point, so we can find where the beam is most likely to fail; the bending equation then gives the stress there.'),
             H("Beams and loads"),
             B("Simply supported: rests on supports at both ends. Cantilever: fixed at one end, free at the other.",
               "Overhanging: extends beyond a support. Built-in (fixed): both ends fixed. Continuous: more than two supports.",
@@ -240,6 +248,7 @@ EXTRAS = {
             B("Point loads only: shear force has vertical jumps; bending moment is made of straight lines.",
               "UDL: shear force is a sloping straight line; bending moment is a parabola.",
               "dM/dx = F: the slope of the BM diagram equals the shear force."),
+            FIG("sfd-bmd"),
             H("Standard results"),
             F("Cantilever, end load W: Fmax = W, Mmax = WL"),
             F("Cantilever, UDL w: Fmax = wL, Mmax = wL²/2"),
@@ -270,9 +279,10 @@ EXTRAS = {
         ],
     },
     "mt-8": {
-        "status": "safety",
         "pdfs": [PDF(MOM_NGANGA, MT_NOTES, "Area moment of inertia"), PDF(RAJPUT, MT_NOTES, "Chapter 3: Centroid and Moment of Inertia")],
         "notes": [
+            H("In plain words"),
+            P("The second moment of area (I) measures how a cross-section's shape resists bending. Material far from the neutral axis counts much more than material near it, which is why I-beams and tubes are so efficient. It appears in every beam bending and deflection formula."),
             H("Second moment of area"),
             P("I = ∫y²dA measures how the area of a section is spread about an axis. It controls bending stiffness and bending stress."),
             F("Rectangle: I = bd³/12 (centroid), bd³/3 (base)"),
@@ -297,9 +307,10 @@ EXTRAS = {
         ],
     },
     "mt-13": {
-        "status": "covered",
         "pdfs": [PDF(MOM_NGANGA, MT_NOTES, "1. Kinematics; Dynamics of a rigid body")],
         "notes": [
+            H("In plain words"),
+            P("Kinematics describes motion: displacement, velocity and acceleration, in straight lines and in rotation. Momentum and impulse deal with forces acting over time, such as collisions and impacts. Flywheels store rotational energy and smooth out an engine's uneven torque."),
             H("Kinematics: describing motion"),
             B("Distance is the ground covered; displacement is how far from the start, with direction.",
               "Speed is distance per unit time; velocity is displacement per unit time.",
@@ -345,9 +356,10 @@ EXTRAS = {
         ],
     },
     "mt-14": {
-        "status": "safety",
         "pdfs": [PDF(MOM_NGANGA, MT_NOTES, "Mass moment of inertia")],
         "notes": [
+            H("In plain words"),
+            P('Mass moment of inertia is to rotation what mass is to straight-line motion: it measures how hard it is to start or stop something spinning. It depends on the mass and how far that mass sits from the axis (I = mk²). It is needed for any question on accelerating rotors, gears, drums and flywheels.'),
             H("Mass moment of inertia"),
             P("I = Σmr² measures how mass is spread about an axis; it resists angular acceleration just as mass resists linear acceleration."),
             F("I = mk²    k = radius of gyration"),
@@ -371,9 +383,10 @@ EXTRAS = {
 
     # ===================================================== ELECTRONICS
     "ec-1": {
-        "status": "covered",
         "pdfs": [PDF("Electronics(Benson Mutunga) part 1.pdf", EC_NOTES, "Classification of solid materials; structure of the atom")],
         "notes": [
+            H("In plain words"),
+            P('Everything in electronics is about controlling the flow of electrons. Conductors let them flow freely, insulators hardly at all, and semiconductors (silicon, germanium) sit in between. The useful trick is that we can change how well a semiconductor conducts by adding tiny amounts of impurity (doping) and by joining P and N material into a junction. That junction is the heart of every diode and transistor.'),
             H("Atomic structure"),
             B("An atom has a nucleus of protons (+) and neutrons (neutral), with electrons (−) in shells around it.",
               "Atomic number Z = number of protons. Mass number A = protons + neutrons. Neutrons = A − Z.",
@@ -385,6 +398,7 @@ EXTRAS = {
             B("Conductors: the bands overlap, so many free electrons. Resistance rises with temperature (positive temperature coefficient).",
               "Semiconductors: small gap, about 1 eV (Si 1.1 eV, Ge 0.7 eV). Resistance falls with temperature (negative temperature coefficient).",
               "Insulators: large gap, over 5 eV. Almost no free electrons."),
+            FIG("bands"),
             H("Semiconductors"),
             B("Each Si or Ge atom shares its 4 valence electrons in covalent bonds with 4 neighbours.",
               "Heat breaks some bonds, creating electron-hole pairs. A hole behaves as a positive charge.",
@@ -416,22 +430,27 @@ EXTRAS = {
         ],
     },
     "ec-3": {
-        "status": "covered",
         "pdfs": [PDF("electronics 3.pdf", EC_NOTES, "Special semiconductor devices"), PDF("electronics (2)Rectifier..pdf", EC_NOTES, "Rectifiers and power supplies")],
         "notes": [
+            H("In plain words"),
+            P('A diode lets current through one way only. That simple rule lets us turn the ac from the mains into the dc that electronics needs (rectification). Special diodes do other jobs: a zener holds a steady voltage, an LED gives light, a photodiode senses it, and an SCR is a diode that waits for a trigger before it conducts.'),
             H("Special semiconductor devices"),
             B("Zener diode: heavily doped; designed to work in reverse breakdown, where its voltage stays almost constant. Used as a voltage regulator and reference.",
               "LED: forward biased; electrons recombining with holes give off light. Used for indicators and displays.",
               "Photodiode: reverse biased; light creates carriers, so the reverse current rises with light intensity. With no light only a small dark current flows.",
               "Varactor (varicap): reverse biased; the depletion layer acts as a capacitor whose capacitance falls as reverse voltage rises. Used for radio tuning and VCOs.",
               "Tunnel diode: very heavily doped; shows negative resistance. Used in high-frequency oscillators."),
+            FIG("diodes"),
             H("Silicon controlled rectifier (SCR)"),
             B("Four layers (PNPN), three junctions, three terminals: anode, cathode, gate.",
               "With the anode positive it stays off until a gate pulse triggers it.",
               "Once on, the gate loses control; it stays on until the anode current falls below the holding current.",
               "Advantages of controlled rectifiers: output voltage can be varied, and large power is switched by a small gate signal."),
+            B("DIAC: two terminals, no gate; breaks over and conducts in either direction once the voltage passes the break-over voltage (about 20–40 V). Used to trigger triacs and for overvoltage protection.",
+              "Silicon controlled switch (SCS): a PNPN device like the SCR but with two gates (anode gate and cathode gate), so it can be switched on and also off by a gate pulse. Used in counters, pulse generators, voltage sensors and timing circuits."),
             H("Rectifiers"),
             P("A regulated power supply: transformer → rectifier → filter → regulator. Vm = √2 × V_rms."),
+            FIG("psu"),
             F("Half-wave: Vdc = Vm/π, PIV = Vm, ripple factor 1.21, η 40.6%"),
             F("Full-wave centre-tap: Vdc = 2Vm/π, PIV = 2Vm, ripple factor 0.48, η 81.2%"),
             F("Bridge: Vdc = 2Vm/π, PIV = Vm, 4 diodes"),
@@ -456,9 +475,10 @@ EXTRAS = {
         ],
     },
     "ec-2": {
-        "status": "covered",
         "pdfs": [PDF("Analog Electronics (19 oct 2025) BJT, FET.pdf", EC_NOTES, "BJT and FET")],
         "notes": [
+            H("In plain words"),
+            P('A transistor is a valve for current: a small current (BJT) or voltage (FET) at one terminal controls a much bigger current through the other two. Used fully on or off it is a switch; used part-way it is an amplifier, turning a weak signal into a strong copy of itself.'),
             H("Bipolar junction transistor (BJT)"),
             B("Three layers: emitter (heavily doped), base (very thin, lightly doped), collector (largest). NPN or PNP.",
               "Active region: emitter-base forward biased, collector-base reverse biased.",
@@ -466,6 +486,7 @@ EXTRAS = {
               "As a switch: cut-off = OFF (no base current); saturation = ON (V_CE ≈ 0.2 V)."),
             F("I_E = I_B + I_C    α = I_C/I_E    β = I_C/I_B"),
             F("β = α/(1 − α)    α = β/(1 + β)"),
+            FIG("bjt"),
             H("Configurations"),
             B("Common base: low input impedance, high output impedance, current gain just under 1, no phase shift.",
               "Common emitter: medium impedances, voltage and current gain, highest power gain, 180° phase shift.",
@@ -508,9 +529,10 @@ EXTRAS = {
         ],
     },
     "ec-5": {
-        "status": "covered",
         "pdfs": [PDF("number system conversion exercise.pdf", EC_NOTES, "Class exercise (KNEC questions)")],
         "notes": [
+            H("In plain words"),
+            P('Digital circuits only know two states, 0 and 1, so numbers are stored in binary. Octal and hexadecimal are shorthand for long binary strings, and codes like BCD and Gray code store numbers in ways that suit displays and sensors. This topic is the arithmetic every later digital topic relies on.'),
             H("Converting between bases"),
             B("Decimal integer → base b: divide by b repeatedly; read the remainders from bottom to top.",
               "Decimal fraction → base b: multiply by b repeatedly; read the whole-number parts from top to bottom.",
@@ -556,9 +578,10 @@ EXTRAS = {
         ],
     },
     "ec-6": {
-        "status": "safety",
         "pdfs": [],
         "notes": [
+            H("In plain words"),
+            P('Logic gates are the building blocks of digital circuits: each one takes 0s and 1s in and gives a 0 or 1 out by a fixed rule. Boolean algebra is the arithmetic of those rules; we use it to simplify a circuit so it needs fewer gates, which makes it cheaper, faster and more reliable.'),
             H("Boolean rules"),
             F("A + 0 = A   A + 1 = 1   A·0 = 0   A·1 = A"),
             F("A + A = A   A·A = A   A + A' = 1   A·A' = 0"),
@@ -571,6 +594,7 @@ EXTRAS = {
               "NAND: 0 only if all inputs are 1. NOR: 1 only if all inputs are 0.",
               "XOR: 1 if the inputs differ. NAND and NOR are universal gates: any circuit can be built from either.",
               "Fan-in: number of inputs a gate accepts. Fan-out: number of gate inputs one output can drive."),
+            FIG("gates"),
         ],
         "mcqs": [
             Q("A + AB simplifies to:", ["A", "B", "AB", "A + B"],
@@ -586,9 +610,10 @@ EXTRAS = {
         ],
     },
     "ec-10": {
-        "status": "covered",
         "pdfs": [PDF("Block Diagrams.pdf", EC_NOTES, "Block diagram reduction rules and examples"), PDF("c.systems.pdf", EC_NOTES, "Control systems overview and signal flow graphs")],
         "notes": [
+            H("In plain words"),
+            P("A control system makes something do what we want, such as holding an aircraft's heading or a room's temperature. With feedback it measures what actually happened, compares it with what was wanted, and corrects the difference. Block diagrams and signal flow graphs are the two ways of drawing such a system so we can work out its overall behaviour."),
             H("Overview"),
             B("Control system: components arranged to regulate or direct a system's output.",
               "Plant: the system being controlled. Controller: produces the control signal from the error.",
@@ -602,6 +627,8 @@ EXTRAS = {
             F("Series: G₁G₂    Parallel: G₁ ± G₂"),
             F("Negative feedback: G/(1 + GH)    Positive feedback: G/(1 − GH)"),
             P("Combine series and parallel blocks, remove the innermost loop, move summing or take-off points only when loops overlap, and repeat until one block remains."),
+            P("Several inputs (for example a reference R and a disturbance): use superposition. Set every input but one to zero, reduce the diagram to find C/R for that input, repeat for each input, then add: C = (C/R₁)R₁ + (C/R₂)R₂ + …"),
+            FIG("control"),
             H("Signal flow graphs"),
             B("Node: a variable. Branch: a directed line with a gain.",
               "Source node: only outgoing branches. Sink node: only incoming branches.",
@@ -630,9 +657,10 @@ EXTRAS = {
         ],
     },
     "ec-11": {
-        "status": "safety",
         "pdfs": [PDF("c.systems.pdf", EC_NOTES, "Mathematical modelling")],
         "notes": [
+            H("In plain words"),
+            P('To predict how a system will behave, we describe it with a transfer function: a formula, in the Laplace variable s, for output ÷ input. Circuits, springs and masses can all be written this way, and compensators are extra blocks added to make a system faster, more accurate or more stable.'),
             H("Transfer functions of circuits"),
             P("In the s-domain, a resistor stays R, an inductor becomes sL and a capacitor becomes 1/sC. Then use voltage division or KVL/KCL exactly as with resistors."),
             F("RC, output across C: Vo/Vi = 1 / (1 + sRC)"),
@@ -650,10 +678,6 @@ EXTRAS = {
     },
 }
 
-# Topics not yet taught this term (shown as "Later" in the app).
-LATER = {"mt-4", "mt-9", "mt-10", "mt-11", "mt-12",
-         "ec-4", "ec-7", "ec-8", "ec-9", "ec-12", "ec-13"}
-
 # Units added later live in their own files and are merged in here.
 from maths_content import MATHS_EXTRAS  # noqa: E402
 from prop_content import PROP_EXTRAS  # noqa: E402
@@ -661,6 +685,8 @@ from airfield_content import AIRFIELD_EXTRAS  # noqa: E402
 from airframe_content import AIRFRAME_EXTRAS  # noqa: E402
 from tof_content import TOF_EXTRAS  # noqa: E402
 from business_content import BUSINESS_EXTRAS  # noqa: E402
+from electronics_content import EC_EXTRAS  # noqa: E402
+from mechtech_content import MT_EXTRAS  # noqa: E402
 
-for _extras in (MATHS_EXTRAS, PROP_EXTRAS, AIRFIELD_EXTRAS, AIRFRAME_EXTRAS, TOF_EXTRAS, BUSINESS_EXTRAS):
+for _extras in (EC_EXTRAS, MT_EXTRAS, MATHS_EXTRAS, PROP_EXTRAS, AIRFIELD_EXTRAS, AIRFRAME_EXTRAS, TOF_EXTRAS, BUSINESS_EXTRAS):
     EXTRAS.update(_extras)

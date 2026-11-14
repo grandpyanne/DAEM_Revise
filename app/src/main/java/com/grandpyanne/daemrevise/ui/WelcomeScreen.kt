@@ -86,8 +86,9 @@ private val PAGES = listOf(
         points = listOf(
             "✅" to "Quizzes explain every answer, and bring back the ones you missed",
             "🃏" to "Flashcards use spaced repetition, like Anki: rate each card and it comes back just before you'd forget it",
-            "🎯" to "Use \"This term\" in a unit to see only what you've covered",
+            "🗺️" to "Topics with a diagram in their notes: look at the picture first, then read",
             "🔎" to "Search any question by word or year, e.g. torsion 2024",
+            "⚡" to "Got a spare 2 minutes? Quick 5 on the home screen",
         ),
     ),
     WelcomePage(
@@ -95,7 +96,9 @@ private val PAGES = listOf(
         title = "Keep the fire going 🔥",
         intro = "Study 5 minutes or more each day to build your streak. Skip a day and I fall asleep.",
         points = listOf(
+            "🏞" to "Kapi's Park: every topic is a stop with 3 stars. Earn them and the park blooms",
             "⭐" to "Your study score (out of 100) mixes time, quiz accuracy and streak",
+            "🎲" to "I keep a couple of games hidden away. They wake up when you study long enough (my lucky number is 27 🤫) or ace a Quick 5",
             "📱" to "Add me to your home screen to see your streak at a glance",
             "💬" to "Spot a mistake or have an idea? Tap Send feedback on the home screen",
         ),

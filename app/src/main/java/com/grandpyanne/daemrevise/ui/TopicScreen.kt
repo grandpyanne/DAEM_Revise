@@ -68,12 +68,9 @@ fun TopicScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.weight(1f),
         ) {
-            item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    StatusTag(topic.status)
-                    if (topic.sittings > 0) Tag("Asked in ${topic.sittings} sittings")
-                }
-            }
+            if (hasTopicArt(topic.id)) item { BlueprintBanner(topic.id) }
+            // How many different KNEC exams asked this topic.
+            if (topic.sittings > 0) item { Tag(if (topic.sittings == 1) "Asked once" else "Asked ${topic.sittings} times") }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     val best = progress.bestQuizScore(topic.id)
@@ -113,6 +110,11 @@ fun TopicScreen(
                         if (topic.summary.isNotBlank()) item { SummaryBox(topic.summary) }
                     }
                     itemsIndexed(topic.notes) { _, block -> NoteView(block, accent) }
+                    if (topic.notes.isNotEmpty() || topic.summary.isNotBlank()) item {
+                        NotesReadButton(read = progress.notesRead(topic.id), accent = accent) {
+                            progress.setNotesRead(topic.id, !progress.notesRead(topic.id))
+                        }
+                    }
                     item { ClassNotesCard(topic.title) }
                     if (topic.refs.isNotEmpty()) item {
                         Text(
@@ -220,6 +222,7 @@ private fun TabBar(selected: Int, accent: Color, onSelect: (Int) -> Unit) {
 @Composable
 private fun NoteView(block: NoteBlock, accent: Color) {
     when (block) {
+        is NoteBlock.Figure -> NoteFigure(block.id)
         is NoteBlock.Heading -> Text(
             text = block.text,
             style = MaterialTheme.typography.titleMedium,
@@ -261,6 +264,35 @@ private fun NoteView(block: NoteBlock, accent: Color) {
 }
 
 /** Reminds the student to go back to the notes they wrote in class. */
+/** End of the notes: mark them read to earn this topic's first star in Kapi's Park. */
+@Composable
+private fun NotesReadButton(read: Boolean, accent: Color, onToggle: () -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(if (read) AppColors.Correct.copy(alpha = 0.14f) else accent.copy(alpha = 0.12f))
+            .clickable(onClick = onToggle)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+    ) {
+        Text(if (read) "✅" else "⭐", style = MaterialTheme.typography.titleLarge)
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(
+                if (read) "Notes read" else "Done reading? Mark as read",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                if (read) "Star earned in Kapi's Park 🏞 (tap to undo)" else "Earns this topic a star in Kapi's Park 🏞",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
 @Composable
 private fun ClassNotesCard(topicTitle: String) {
     Card(
@@ -325,6 +357,7 @@ private fun QuestionItem(number: Int, question: Question, done: Boolean, onToggl
                 text = "$number. ${question.text}",
                 style = MaterialTheme.typography.bodyMedium,
             )
+            QuestionFigures(question.figures)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.weight(1f)) {
                     if (question.source.isNotBlank()) Tag(question.source)
