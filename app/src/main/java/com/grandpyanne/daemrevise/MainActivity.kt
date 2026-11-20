@@ -15,6 +15,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -121,14 +124,71 @@ sealed interface Screen {
     data object Park : Screen
 }
 
+/** A screen as a short string, so the back stack survives Android closing the app in the background. */
+private fun Screen.encode(): String = when (this) {
+    Screen.Home -> "home"
+    Screen.Search -> "search"
+    Screen.Library -> "library"
+    Screen.Welcome -> "welcome"
+    Screen.QuickFive -> "quick"
+    Screen.Games -> "games"
+    Screen.Park -> "park"
+    is Screen.Reader -> "reader|$bookId|$page"
+    is Screen.UnitPage -> "unit|$unitId"
+    is Screen.Topic -> "topic|$unitId|$topicId"
+    is Screen.Flashcards -> "cards|$unitId|${topicId.orEmpty()}"
+    is Screen.Quiz -> "quiz|$unitId|${topicId.orEmpty()}"
+}
+
+/** The reverse of [encode]; null for anything that no longer exists. */
+private fun decodeScreen(s: String, unitIds: Set<String>): Screen? {
+    val p = s.split("|")
+    fun unit() = p.getOrNull(1)?.takeIf { it in unitIds }
+    return when (p[0]) {
+        "home" -> Screen.Home
+        "search" -> Screen.Search
+        "library" -> Screen.Library
+        "welcome" -> Screen.Welcome
+        "quick" -> Screen.QuickFive
+        "games" -> Screen.Games
+        "park" -> Screen.Park
+        "reader" -> p.getOrNull(2)?.toIntOrNull()?.let { Screen.Reader(p[1], it) }
+        "unit" -> unit()?.let { Screen.UnitPage(it) }
+        "topic" -> unit()?.let { u -> p.getOrNull(2)?.let { Screen.Topic(u, it) } }
+        "cards" -> unit()?.let { Screen.Flashcards(it, p.getOrNull(2)?.ifEmpty { null }) }
+        "quiz" -> unit()?.let { Screen.Quiz(it, p.getOrNull(2)?.ifEmpty { null }) }
+        else -> null
+    }
+}
+
 // built by Grandpyanne™
 @Composable
 private fun App(progress: Progress, settings: Settings) {
     val context = LocalContext.current
     val catalog = remember { ContentRepository.catalog(context) }
     val units = catalog.units
-    // First launch starts with the welcome tour.
-    val backStack = remember {
+    // First launch starts with the welcome tour. Saveable, so coming back to the app after
+    // Android closed it in the background returns to the same screen (e.g. mid-quiz).
+    val unitIds = remember(units) { units.map { it.id }.toSet() }
+    val backStack = rememberSaveable(
+        saver = listSaver<SnapshotStateList<Screen>, String>(
+            save = { stack -> stack.map { it.encode() } },
+            restore = { saved ->
+                mutableStateListOf<Screen>().apply {
+                    addAll(saved.mapNotNull { decodeScreen(it, unitIds) }.filter { s ->
+                        // Drop anything whose topic has gone since it was saved.
+                        when (s) {
+                            is Screen.Topic -> units.first { it.id == s.unitId }.topics.any { it.id == s.topicId }
+                            is Screen.Quiz -> s.topicId == null || units.first { it.id == s.unitId }.topics.any { it.id == s.topicId }
+                            is Screen.Flashcards -> s.topicId == null || units.first { it.id == s.unitId }.topics.any { it.id == s.topicId }
+                            else -> true
+                        }
+                    })
+                    if (firstOrNull() != Screen.Home) add(0, Screen.Home)
+                }
+            },
+        ),
+    ) {
         mutableStateListOf<Screen>(Screen.Home).apply { if (!settings.welcomeSeen) add(Screen.Welcome) }
     }
 

@@ -1,0 +1,51 @@
+[
+ {
+  "title": "Engineering Maths II",
+  "unit": "maths2",
+  "venue": "B 17",
+  "start": "2026-11-23T09:00:00+03:00",
+  "end": "2026-11-23T12:00:00+03:00"
+ },
+ {
+  "title": "ASP II & Research Methods",
+  "unit": "airfield",
+  "venue": "B 17",
+  "start": "2026-11-23T14:00:00+03:00",
+  "end": "2026-11-23T17:00:00+03:00"
+ },
+ {
+  "title": "Control Systems & Electronics",
+  "unit": "electronics",
+  "venue": "B 13",
+  "start": "2026-11-24T09:00:00+03:00",
+  "end": "2026-11-24T12:00:00+03:00"
+ },
+ {
+  "title": "Aircraft Propeller Systems",
+  "unit": "propellers",
+  "venue": "B 13",
+  "start": "2026-11-24T14:00:00+03:00",
+  "end": "2026-11-24T17:00:00+03:00"
+ },
+ {
+  "title": "Airframe Systems I",
+  "unit": "airframe",
+  "venue": "B 13",
+  "start": "2026-11-26T09:00:00+03:00",
+  "end": "2026-11-26T12:00:00+03:00"
+ },
+ {
+  "title": "Theory of Flight",
+  "unit": "tof",
+  "venue": "B 13",
+  "start": "2026-11-26T14:00:00+03:00",
+  "end": "2026-11-26T17:00:00+03:00"
+ },
+ {
+  "title": "Aircraft Mechanical Technology I",
+  "unit": "mechtech",
+  "venue": "B 19",
+  "start": "2026-11-27T09:00:00+03:00",
+  "end": "2026-11-27T12:00:00+03:00"
+ }
+]

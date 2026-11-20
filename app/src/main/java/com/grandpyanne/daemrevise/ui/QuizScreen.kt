@@ -29,6 +29,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +53,39 @@ private data class QuizItem(
     val mcq: Mcq,
     val options: List<String>,
     val correctIndex: Int,
+    /** Original option positions in shown order, so the quiz can be saved and restored. */
+    val order: List<Int>,
+)
+
+private fun quizItem(topic: Topic, i: Int, order: List<Int>): QuizItem {
+    val mcq = topic.mcqs[i]
+    return QuizItem(
+        topicId = topic.id,
+        topicTitle = topic.title,
+        index = i,
+        mcq = mcq,
+        options = order.map { mcq.options[it] },
+        correctIndex = order.indexOf(mcq.answer),
+        order = order,
+    )
+}
+
+/**
+ * Saves a quiz in progress as short strings ("topicId|index|2,0,3,1"), so leaving the app
+ * mid-quiz (and Android closing it in the background) doesn't throw the quiz away.
+ */
+private fun quizSaver(topics: List<Topic>) = listSaver<List<QuizItem>, String>(
+    save = { items -> items.map { "${it.topicId}|${it.index}|${it.order.joinToString(",")}" } },
+    restore = { saved ->
+        saved.mapNotNull { line ->
+            val parts = line.split("|")
+            val topic = topics.firstOrNull { it.id == parts.getOrNull(0) } ?: return@mapNotNull null
+            val i = parts.getOrNull(1)?.toIntOrNull()?.takeIf { it in topic.mcqs.indices } ?: return@mapNotNull null
+            val order = parts.getOrNull(2)?.split(",")?.mapNotNull { it.toIntOrNull() }.orEmpty()
+            if (order.sorted() != topic.mcqs[i].options.indices.toList()) return@mapNotNull null
+            quizItem(topic, i, order)
+        }
+    },
 )
 
 // crafted by Grandpyanne™
@@ -71,18 +106,7 @@ private fun buildQuiz(topics: List<Topic>, limit: Int, progress: Progress): List
     return (due + new + later)
         .take(limit)
         .shuffled()
-        .map { (topic, i, _) ->
-            val mcq = topic.mcqs[i]
-            val order = mcq.options.indices.shuffled()
-            QuizItem(
-                topicId = topic.id,
-                topicTitle = topic.title,
-                index = i,
-                mcq = mcq,
-                options = order.map { mcq.options[it] },
-                correctIndex = order.indexOf(mcq.answer),
-            )
-        }
+        .map { (topic, i, _) -> quizItem(topic, i, topic.mcqs[i].options.indices.shuffled()) }
 }
 
 /**
@@ -103,12 +127,13 @@ fun QuizScreen(
     quick: Boolean = false,
     onGames: (() -> Unit)? = null,
 ) {
-    var round by remember { mutableIntStateOf(0) }
-    val items = remember(topics, round) { buildQuiz(topics, limit, progress) }
-    var index by remember(items) { mutableIntStateOf(0) }
-    var chosen by remember(items, index) { mutableStateOf<Int?>(null) }
-    var correct by remember(items) { mutableIntStateOf(0) }
-    var missed by remember(items) { mutableIntStateOf(0) }
+    // All saveable: if Android closes the app in the background, the quiz comes back where you left it.
+    var round by rememberSaveable { mutableIntStateOf(0) }
+    val items = rememberSaveable(round, saver = quizSaver(topics)) { buildQuiz(topics, limit, progress) }
+    var index by rememberSaveable(round) { mutableIntStateOf(0) }
+    var chosen by rememberSaveable(round, index) { mutableStateOf<Int?>(null) }
+    var correct by rememberSaveable(round) { mutableIntStateOf(0) }
+    var missed by rememberSaveable(round) { mutableIntStateOf(0) }
 
     Column(Modifier.fillMaxSize().topicArt(topics.singleOrNull()?.id)) {
         Header(
@@ -125,8 +150,12 @@ fun QuizScreen(
             )
         } else if (index >= items.size) {
             val percent = (100.0 * correct / items.size).roundToInt()
-            var earnedGame by remember(items) { mutableStateOf(false) }
-            LaunchedEffect(items) {
+            var earnedGame by rememberSaveable(round) { mutableStateOf(false) }
+            // Record the result once, even if the result screen is restored later.
+            var recorded by rememberSaveable(round) { mutableStateOf(false) }
+            LaunchedEffect(round) {
+                if (recorded) return@LaunchedEffect
+                recorded = true
                 progress.recordQuizScore(scoreKey, percent)
                 if (quick) {
                     // Only say "earned" if it really added a game (the daily cap may already be reached).

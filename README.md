@@ -30,9 +30,10 @@ An offline Android revision app for the DAEM Year 2 KNEC units, built from your 
 - **Kapi's Park** (new in v20): a map from the entrance up to Kapi's hot spring. Each unit is an area (Workshop Yard, Circuit Forest, Maths Meadow, Propeller Pier, Safety Station, The Hangar, Runway Hill, Market Square) and each topic a stop with 3 stars: notes read ("Mark as read" at the end of the notes), quiz 70%+, and half the flashcards learned. Areas bloom at 25/50/75/100%, a finished area gives Kapi a keepsake, and every visit celebrates the stars earned since the last one. The glowing "Next stop" shows where to study next.
 - **Quick 5** (new in v20): five MCQs from all your units in one tap, for spare moments. Missed and due questions come first.
 - **Kapi's games** (new in v20): three games, each with a short how-to the first time.
-  - **Kapi Blocks**: drag shapes onto an 8×8 board, clear rows and columns, streaks and a Perfect bonus. Mostly 4-block shapes (squares, Ts, Ls, Zs); singles are rare. The colour theme changes every 600 points and after great moves (perfect clear, 3+ lines, long streaks). One "new shapes" rescue a game.
+  - **Kapi Blocks** (restyled in v20): drag shapes onto an 8×8 board, clear rows and columns, streaks and a Perfect clear bonus. Mostly 4-block shapes; singles are rare. Rounded glossy blocks, each shape in its own colour (same family as Kapi Jewels), on a night-navy board. The board theme changes every 600 points and after great moves: Midnight, Jade, Ember, Ocean, Walnut, Dusk. Rows about to clear glow gold. One "new shapes" rescue a game.
   - **Kapi Jewels** (was Kapi Crush; restyled in v20): swap cut gemstones on a night-navy board to line up 3 or more. Each colour has its own shape (round sapphire, emerald cut, hexagonal ruby, lozenge topaz, trillion amethyst). 4 in a line makes a Beam jewel (clears its row/column), an L or T makes a Burst (3×3), 5 makes a Prism (clears every jewel of one colour). Swap two power-ups together for a combo. Levels with collect goals and ★ ratings; beat one and the next follows in the same game. One +5 moves rescue a game.
-  - **Kapi Mahjong**: tap free tiles to send them up to a 4-slot tray; two the same clear. If the tray fills with no match, the game is over. A new layout each level (Little Pyramid, Twin Towers, Kapi's Hill, The Runway…), and the next level follows in the same game. Undo, 3 hints, 2 shuffles, and one rescue that sends the tray back.
+  - **Kapi Mahjong** (classic tiles in v20): tap free tiles to send them up to a 4-slot tray; two the same clear. If the tray fills with no match, the game is over. Classic faces drawn by the app: circles 1–9, bamboo 1–9 and the red 中 and green 發. A new layout each level (Little Pyramid, Twin Towers, Kapi's Hill, The Runway…), and the next level follows in the same game. Undo, 3 hints, 2 shuffles, and one rescue that sends the tray back.
+  - **The games screen** (new in v20): an evening-lounge backdrop, Kapi under a spotlight, and three cards with a small picture of each game, its level, best score and a gold Play button.
   - Each game has **one free try a day**. After that, games are earned by studying: one for every 27 minutes of study, or for a Quick 5 with 4 or more right (at most 2 a day from Quick 5s). At most 5 games a day, shared between the three. Time spent playing does not count as study time. The tour only hints at the 27 ("Kapi's lucky number").
 - **Note diagrams** (new in v20, always shown): 27 labelled diagrams drawn from scratch (nothing copied from textbooks), placed inside the notes with `FIG("id")`: logic gates, half adder, 4-to-1 MUX, clocked SR flip-flop, Johnson counter, binary-weighted DAC, successive-approximation ADC, energy bands, power-supply blocks, BJT and diode symbols, inverting op-amp, closed-loop block diagram, Bode margins, step response, test signals, stress-strain curve, SFD/BMD, thin cylinder stresses, balancing polygon, simple/compound and epicyclic gear trains, plate and cone clutches, open and crossed belts, the four forces, aircraft axes and the blade element.
 - **Blueprint sketches** (new in v20, developer preview, `Progress.DEV_TOPIC_ART`): every topic (except Business Plan) gets a blueprint-style line drawing — a grid-paper strip at the top of its page and a faint copy behind its quiz and flashcards. Set the switch to `false` before a Play Store build to hide them.
@@ -45,6 +46,18 @@ An offline Android revision app for the DAEM Year 2 KNEC units, built from your 
 ### Study score
 
 Out of 100: up to 50 for time (full at 60 minutes a day), up to 30 for today's quiz accuracy (15 if no quiz yet), and up to 20 for the streak (full at 7 days). A day counts toward the streak after 5 minutes of study.
+
+## Web version (for iPhones)
+
+The `docs/` folder is a web version of the app for friends with iPhones (or any phone or laptop):
+notes with all the diagrams, past papers with their figures, flashcards, quizzes (with the same
+spaced repetition), Quick 5, search, stars and the exam countdown. Progress is saved on each phone.
+Kapi's games, Kapi's Park, the PDF books and the widget stay Android-only.
+
+- **Hosting:** GitHub Pages, free. In the repo on github.com: Settings → Pages → "Deploy from a branch" → branch `main`, folder `/docs` → Save. The address is then `https://<your-username>.github.io/<repo-name>/`.
+- **On an iPhone:** open the address in Safari → Share → Add to Home Screen. It opens full screen like an app and works offline after the first visit.
+- **Updating it:** after `python tools/build_content.py`, run `python tools/build_web.py`, then commit and push. Phones pick up the new version the next time they open it with internet.
+- It reads the same `content.json` as the Android app, the diagrams from `tools/sketches.py` and the exam timetable from `data/Exams.kt`, so there is nothing else to keep in step. Don't edit `docs/data`, `docs/figures` or `docs/img` by hand; `build_web.py` rewrites them.
 
 ## Sharing the app with friends
 
@@ -114,6 +127,7 @@ tools/
   books.py                   The textbooks and which chapter/page goes with each topic
   *_questions.txt            Past-paper questions by topic
   sketches.py                The topic sketches and note diagrams; run it to regenerate ui/TopicSketches.kt
+  build_web.py               Refreshes the web version in docs/ from the app's content
   electronics_content.py     Notes and MCQs for the Electronics topics added in v20
   mechtech_content.py        Notes and MCQs for the Mech Tech topics added in v20
 ```

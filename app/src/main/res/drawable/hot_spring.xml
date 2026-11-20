@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kapi's Hot Spring: the top of Kapi's Park. Sky gradient and steam are drawn by the app. Crafted by Grandpyanne™ -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="220dp"
+    android:viewportWidth="360"
+    android:viewportHeight="220">
+    <!-- moon -->
+    <path android:fillColor="#FFF4D6" android:pathData="M292,40 a16,16 0 1,1 -0.1,0 Z" />
+    <path android:fillColor="#F3DFB0" android:fillAlpha="0.6" android:pathData="M298,46 a4,4 0 1,1 -0.1,0 Z" />
+    <!-- stars -->
+    <path android:fillColor="#FFFFFF" android:pathData="M40,30 l1.5,3.5 3.5,1.5 -3.5,1.5 -1.5,3.5 -1.5,-3.5 -3.5,-1.5 3.5,-1.5 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M120,18 l1,2.5 2.5,1 -2.5,1 -1,2.5 -1,-2.5 -2.5,-1 2.5,-1 Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M230,26 l1,2.5 2.5,1 -2.5,1 -1,2.5 -1,-2.5 -2.5,-1 2.5,-1 Z" />
+    <!-- mountains -->
+    <path android:fillColor="#7A5E9C" android:pathData="M0,120 L60,62 L102,96 L150,50 L214,112 L0,140 Z" />
+    <path android:fillColor="#9A6FA6" android:pathData="M120,128 L196,70 L248,104 L290,78 L360,124 L360,150 L120,150 Z" />
+    <path android:fillColor="#FFFFFF" android:fillAlpha="0.75" android:pathData="M150,50 L163,63 L156,62 L150,68 L144,61 L138,62 Z" />
+    <path android:fillColor="#FFFFFF" android:fillAlpha="0.75" android:pathData="M196,70 L207,79 L200,79 L195,84 L190,78 L185,79 Z" />
+    <!-- ground -->
+    <path android:fillColor="#5E8C5A" android:pathData="M0,138 C80,126 140,132 200,130 C260,128 320,124 360,130 L360,220 L0,220 Z" />
+    <path android:fillColor="#4E7A4B" android:pathData="M0,170 C90,160 270,160 360,168 L360,220 L0,220 Z" />
+    <!-- bamboo (left) -->
+    <path android:fillColor="#6FAE5A" android:pathData="M22,60 h7 v110 h-7 Z" />
+    <path android:fillColor="#4F8F42" android:pathData="M22,92 h7 v3 h-7 Z M22,126 h7 v3 h-7 Z" />
+    <path android:fillColor="#7DBF66" android:pathData="M36,78 h6 v92 h-6 Z" />
+    <path android:fillColor="#4F8F42" android:pathData="M36,108 h6 v3 h-6 Z M36,140 h6 v3 h-6 Z" />
+    <path android:fillColor="#5C9E4C" android:pathData="M29,72 C40,62 52,64 58,70 C48,72 38,74 29,72 Z" />
+    <path android:fillColor="#5C9E4C" android:pathData="M42,96 C54,88 64,92 70,98 C60,99 50,100 42,96 Z" />
+    <path android:fillColor="#5C9E4C" android:pathData="M22,84 C12,76 4,78 0,84 C8,86 16,87 22,84 Z" />
+    <!-- stone lantern (right) -->
+    <path android:fillColor="#9E9A92" android:pathData="M306,116 h28 l-6,-10 h-16 Z" />
+    <path android:fillColor="#B7B2A8" android:pathData="M310,116 h20 v18 h-20 Z" />
+    <path android:fillColor="#FFD27A" android:pathData="M314,120 h12 v10 h-12 Z" />
+    <path android:fillColor="#9E9A92" android:pathData="M304,134 h32 v6 h-32 Z" />
+    <path android:fillColor="#B7B2A8" android:pathData="M314,140 h12 v26 h-12 Z" />
+    <path android:fillColor="#8A867E" android:pathData="M306,166 h28 v6 h-28 Z" />
+    <path android:fillColor="#FFD27A" android:fillAlpha="0.25" android:pathData="M320,125 m-22,0 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0 Z" />
+    <!-- rocks behind the pool -->
+    <path android:fillColor="#8E8A84" android:pathData="M70,150 C70,136 96,132 104,144 C110,134 132,134 136,146 C146,138 170,138 176,150 Z" />
+    <path android:fillColor="#A39E97" android:pathData="M176,150 C180,136 206,134 214,146 C222,136 246,136 250,148 C258,140 282,142 286,154 Z" />
+    <!-- pool -->
+    <path android:fillColor="#2E8C9E" android:pathData="M66,166 C66,146 120,140 178,140 C236,140 292,146 292,166 C292,186 236,196 178,196 C120,196 66,186 66,166 Z" />
+    <path android:fillColor="#4FB7C6" android:pathData="M80,164 C80,152 126,148 178,148 C230,148 278,152 278,164 C278,176 230,184 178,184 C126,184 80,176 80,164 Z" />
+    <path android:fillColor="#8FDCE6" android:fillAlpha="0.7" android:pathData="M104,158 C120,152 150,151 164,154 C150,157 124,159 104,158 Z" />
+    <path android:fillColor="#8FDCE6" android:fillAlpha="0.6" android:pathData="M206,172 C222,168 246,168 256,171 C244,174 222,175 206,172 Z" />
+    <!-- Kapi soaking: head above the water, eyes closed, orange on his head -->
+    <path android:fillColor="#A9743F" android:pathData="M150,166 C148,148 160,136 180,136 C200,136 212,146 212,160 C212,168 206,172 198,172 L160,172 C154,172 150,170 150,166 Z" />
+    <path android:fillColor="#8A5A2E" android:pathData="M156,140 a6,5 0 1,1 12,0 a6,5 0 1,1 -12,0 Z" />
+    <path android:fillColor="#8A5A2E" android:pathData="M190,138 a6,5 0 1,1 12,0 a6,5 0 1,1 -12,0 Z" />
+    <path android:fillColor="#C99A64" android:pathData="M188,158 C192,150 210,150 214,158 C216,166 206,170 198,169 C192,168 186,164 188,158 Z" />
+    <path android:fillColor="#3B2A1E" android:pathData="M203,156 a3,2 0 1,1 6,0 a3,2 0 1,1 -6,0 Z" />
+    <path android:strokeColor="#3B2A1E" android:strokeWidth="2.2" android:strokeLineCap="round" android:pathData="M168,154 q5,4 10,0" />
+    <path android:strokeColor="#3B2A1E" android:strokeWidth="2.2" android:strokeLineCap="round" android:pathData="M186,150 q4,3 8,0" />
+    <path android:fillColor="#E8A0A0" android:fillAlpha="0.8" android:pathData="M164,160 a4,2.6 0 1,1 8,0 a4,2.6 0 1,1 -8,0 Z" />
+    <!-- the orange -->
+    <path android:fillColor="#F59E2B" android:pathData="M170,128 a11,10 0 1,1 22,0 a11,10 0 1,1 -22,0 Z" />
+    <path android:fillColor="#FFC46B" android:pathData="M174,124 a4,3 0 1,1 8,0 a4,3 0 1,1 -8,0 Z" />
+    <path android:fillColor="#4F8F42" android:pathData="M181,118 C184,112 192,112 194,116 C189,118 185,119 181,118 Z" />
+    <!-- water line over Kapi -->
+    <path android:fillColor="#4FB7C6" android:pathData="M146,170 C160,166 200,166 216,170 C210,176 152,176 146,170 Z" />
+    <path android:fillColor="#8FDCE6" android:fillAlpha="0.8" android:pathData="M148,170 C164,167 196,167 214,170 C198,171 166,171 148,170 Z" />
+    <!-- front rocks -->
+    <path android:fillColor="#9A958E" android:pathData="M58,182 C56,168 80,166 88,176 C94,166 116,168 118,182 C120,196 60,198 58,182 Z" />
+    <path android:fillColor="#B0ABA3" android:pathData="M240,184 C238,170 262,168 270,178 C278,170 300,172 300,186 C300,198 242,198 240,184 Z" />
+    <path android:fillColor="#8E8A84" android:pathData="M130,196 C130,188 148,186 154,192 C160,186 176,188 176,196 Z" />
+    <!-- little towel on a rock -->
+    <path android:fillColor="#FFFFFF" android:pathData="M262,170 h20 v8 h-20 Z" />
+    <path android:fillColor="#E58C8A" android:pathData="M262,173 h20 v2 h-20 Z" />
+</vector>
